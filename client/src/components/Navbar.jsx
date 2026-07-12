@@ -9,7 +9,7 @@ import { FaTruck, FaRoute } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../hooks/useAuth';
-import { useNotifications, getCategoryClass } from '../context/NotificationContext';
+import { useNotifications, getCategoryClass } from '../context/NotificationContext.jsx';
 import { TransitOpsLogoIcon } from './TransitOpsLogo';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
