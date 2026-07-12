@@ -20,7 +20,7 @@ export const TripsPage = () => {
           rowLinkPrefix="/dashboard/safety/trips"
           columns={[
             { key: 'id', label: 'Trip ID' },
-            { key: 'title', label: 'Trip', render: (row) => <div className="font-semibold text-slate-800">{row.title}</div> },
+            { key: 'title', label: 'Trip', render: (row) => <div className="font-semibold text-slate-800 dark:text-white">{row.title}</div> },
             { key: 'driver', label: 'Driver' },
             { key: 'route', label: 'Route' },
             { key: 'status', label: 'Status', render: (row) => <Badge value={row.status} /> },
@@ -30,7 +30,7 @@ export const TripsPage = () => {
       </SectionCard>
 
       <SectionCard title="Trip notes" subtitle="Safety review checkpoints.">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-600">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-600 dark:text-slate-300">
           <p>• Confirm the driver has passed the pre-trip inspection checklist.</p>
           <p>• Monitor hazard scores on long-haul and nighttime runs.</p>
           <p>• Attach incident notes before a trip is marked complete.</p>
@@ -39,7 +39,7 @@ export const TripsPage = () => {
 
       <div className="flex flex-wrap gap-3">
         {tripRecords.map((trip) => (
-          <Link key={trip.id} to={`/dashboard/safety/trips/${trip.id}`} className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
+          <Link key={trip.id} to={`/dashboard/safety/trips/${trip.id}`} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
             {trip.id}
           </Link>
         ))}

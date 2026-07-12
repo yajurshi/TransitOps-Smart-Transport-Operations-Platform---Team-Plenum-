@@ -8,7 +8,7 @@ export const RolePageLayout = ({ activeTab, title, subtitle, children, showSearc
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex">
       <Sidebar activeTab={activeTab} />
       <div className="flex-1 pl-64 flex flex-col min-h-screen">
         <Navbar
@@ -24,8 +24,8 @@ export const RolePageLayout = ({ activeTab, title, subtitle, children, showSearc
           {(title || subtitle) && (
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                {title && <h1 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h1>}
-                {subtitle && <p className="text-xs text-slate-500 font-medium">{subtitle}</p>}
+                {title && <h1 className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">{title}</h1>}
+                {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">{subtitle}</p>}
               </div>
             </div>
           )}

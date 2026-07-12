@@ -76,16 +76,16 @@ export const CreateTrip = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
+      <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-700 pb-4">
         <button
           onClick={() => setCurrentView('Trips')}
-          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+          className="p-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white transition-all shadow-sm">
           
           <FiArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight">Create Trip Dispatch</h1>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">Create Trip Dispatch</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Register a new route, allocate cargo weight, and assign available vehicles and drivers.
           </p>
         </div>
@@ -104,12 +104,12 @@ export const CreateTrip = () => {
           }
 
           {/* Form */}
-          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 shadow-sm space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               
               {/* Source */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Source Location *
                 </label>
                 <input
@@ -117,13 +117,13 @@ export const CreateTrip = () => {
                   placeholder="e.g. Chicago Depot"
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
                 
               </div>
 
               {/* Destination */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Destination *
                 </label>
                 <input
@@ -131,19 +131,19 @@ export const CreateTrip = () => {
                   placeholder="e.g. Detroit Fulfillment"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
                 
               </div>
 
               {/* Vehicle Dropdown */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Assign Vehicle (Available Only) *
                 </label>
                 <select
                   value={vehicleReg}
                   onChange={(e) => setVehicleReg(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 cursor-pointer">
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 cursor-pointer">
                   
                   <option value="">Select a vehicle...</option>
                   {availableVehicles.map((v) =>
@@ -153,7 +153,7 @@ export const CreateTrip = () => {
                   )}
                 </select>
                 {selectedVehicleCapacity &&
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mt-1">
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mt-1">
                     Selected Vehicle Capacity: {selectedVehicleCapacity.toLocaleString()} kg
                   </span>
                 }
@@ -161,13 +161,13 @@ export const CreateTrip = () => {
 
               {/* Driver Dropdown */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Assign Driver (Available Only) *
                 </label>
                 <select
                   value={driverName}
                   onChange={(e) => setDriverName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 cursor-pointer">
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 cursor-pointer">
                   
                   <option value="">Select a driver...</option>
                   {availableDrivers.map((d) =>
@@ -180,7 +180,7 @@ export const CreateTrip = () => {
 
               {/* Cargo Weight */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Cargo Weight (kg) *
                 </label>
                 <input
@@ -188,13 +188,13 @@ export const CreateTrip = () => {
                   placeholder="e.g. 5000"
                   value={cargoWeight}
                   onChange={(e) => setCargoWeight(e.target.value === '' ? '' : Number(e.target.value))}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
                 
               </div>
 
               {/* Planned Distance */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Planned Distance (km) *
                 </label>
                 <input
@@ -202,7 +202,7 @@ export const CreateTrip = () => {
                   placeholder="e.g. 450"
                   value={distance}
                   onChange={(e) => setDistance(e.target.value === '' ? '' : Number(e.target.value))}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
                 
               </div>
 
@@ -210,7 +210,7 @@ export const CreateTrip = () => {
 
             {/* Notes */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+              <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                 Dispatch Notes & Instructions
               </label>
               <textarea
@@ -218,21 +218,21 @@ export const CreateTrip = () => {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
               
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+            <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
               <button
                 onClick={() => setCurrentView('Trips')}
-                className="bg-white hover:bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg border border-slate-200 transition-all active:scale-95">
+                className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 transition-all active:scale-95">
                 
                 Cancel
               </button>
               <button
                 onClick={() => handleSave(false)}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all active:scale-95">
+                className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all active:scale-95">
                 
                 Save Draft
               </button>

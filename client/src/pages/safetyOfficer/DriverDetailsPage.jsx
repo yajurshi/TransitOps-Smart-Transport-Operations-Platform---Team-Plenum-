@@ -10,27 +10,27 @@ export const DriverDetailsPage = () => {
     <SafetyOfficerPageShell activeTab="Drivers" title={`${driver.name} Details`} subtitle="Compliance profile and readiness summary.">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <SectionCard title="Identity" subtitle="Driver record overview.">
-          <div className="space-y-4 text-sm text-slate-600">
-            <div><span className="font-semibold text-slate-800">Driver ID:</span> {driver.id}</div>
-            <div><span className="font-semibold text-slate-800">License:</span> {driver.license}</div>
-            <div><span className="font-semibold text-slate-800">Phone:</span> {driver.phone}</div>
-            <div><span className="font-semibold text-slate-800">Shift:</span> {driver.shift}</div>
-            <div><span className="font-semibold text-slate-800">Last check:</span> {driver.lastCheck}</div>
+          <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+            <div><span className="font-semibold text-slate-800 dark:text-white">Driver ID:</span> {driver.id}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">License:</span> {driver.license}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Phone:</span> {driver.phone}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Shift:</span> {driver.shift}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Last check:</span> {driver.lastCheck}</div>
           </div>
         </SectionCard>
         <SectionCard title="Risk posture" subtitle="Current compliance state.">
           <div className="space-y-4">
             <Badge value={driver.status} />
             <Badge value={driver.risk} />
-            <div className="text-sm text-slate-600 space-y-2">
-              <p>Safety score: <span className="font-semibold text-slate-800">{driver.score}</span></p>
-              <p>Violations recorded: <span className="font-semibold text-slate-800">{driver.violations}</span></p>
-              <p>Primary route: <span className="font-semibold text-slate-800">{driver.route}</span></p>
+            <div className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <p>Safety score: <span className="font-semibold text-slate-800 dark:text-white">{driver.score}</span></p>
+              <p>Violations recorded: <span className="font-semibold text-slate-800 dark:text-white">{driver.violations}</span></p>
+              <p>Primary route: <span className="font-semibold text-slate-800 dark:text-white">{driver.route}</span></p>
             </div>
           </div>
         </SectionCard>
         <SectionCard title="Actions" subtitle="Next steps for the safety desk.">
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <p>• Review pre-shift checklist before release.</p>
             <p>• Confirm drug and fatigue compliance if the route changes.</p>
             <p>• Escalate to dispatch if the risk state changes.</p>

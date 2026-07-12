@@ -20,7 +20,7 @@ export const MaintenancePage = () => {
           rowLinkPrefix="/dashboard/safety/maintenance"
           columns={[
             { key: 'id', label: 'Job ID' },
-            { key: 'title', label: 'Job', render: (row) => <div className="font-semibold text-slate-800">{row.title}</div> },
+            { key: 'title', label: 'Job', render: (row) => <div className="font-semibold text-slate-800 dark:text-white">{row.title}</div> },
             { key: 'vehicle', label: 'Vehicle' },
             { key: 'type', label: 'Type' },
             { key: 'status', label: 'Status', render: (row) => <Badge value={row.status} /> },
@@ -31,7 +31,7 @@ export const MaintenancePage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SectionCard title="Risk notes" subtitle="What the safety desk watches closely.">
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <p>• Any open brake or steering issue prevents dispatch approval.</p>
             <p>• Calibration drift must be resolved before the next safety run.</p>
             <p>• Closed jobs should keep the inspection trace attached to the asset.</p>
@@ -40,7 +40,7 @@ export const MaintenancePage = () => {
         <SectionCard title="Quick links" subtitle="Jump into the repair record.">
           <div className="flex flex-wrap gap-3">
             {maintenanceRecords.map((record) => (
-              <Link key={record.id} to={`/dashboard/safety/maintenance/${record.id}`} className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
+              <Link key={record.id} to={`/dashboard/safety/maintenance/${record.id}`} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
                 {record.id}
               </Link>
             ))}

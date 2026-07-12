@@ -25,7 +25,7 @@ export const DriversPage = () => {
           rowLinkPrefix="/dashboard/safety/drivers"
           columns={[
             { key: 'id', label: 'Driver ID' },
-            { key: 'name', label: 'Driver', render: (row) => <div className="font-semibold text-slate-800">{row.name}</div> },
+            { key: 'name', label: 'Driver', render: (row) => <div className="font-semibold text-slate-800 dark:text-white">{row.name}</div> },
             { key: 'route', label: 'Primary route' },
             { key: 'license', label: 'License' },
             { key: 'status', label: 'Status', render: (row) => <Badge value={row.status} /> },
@@ -36,7 +36,7 @@ export const DriversPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SectionCard title="Safety controls" subtitle="Core actions for daily oversight.">
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <p>• Pull up a driver profile to review certifications and incident history.</p>
             <p>• Flag a record for re-training when the risk score falls below policy thresholds.</p>
             <p>• Share a readiness summary with dispatch before releasing a shift.</p>
@@ -45,7 +45,7 @@ export const DriversPage = () => {
         <SectionCard title="Quick access" subtitle="Jump into a specific driver record.">
           <div className="flex flex-wrap gap-3">
             {driverRecords.map((driver) => (
-              <Link key={driver.id} to={`/dashboard/safety/drivers/${driver.id}`} className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
+              <Link key={driver.id} to={`/dashboard/safety/drivers/${driver.id}`} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors">
                 {driver.name}
               </Link>
             ))}

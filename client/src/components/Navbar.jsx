@@ -15,11 +15,11 @@ export const Navbar = ({
   const systemTime = '11:29 AM';
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 fixed top-0 right-0 left-64 z-20 shadow-sm">
+    <header className="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-8 fixed top-0 right-0 left-64 z-20 shadow-sm">
       {/* Search Bar */}
       {showSearch ? (
         <div className="relative w-96">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 dark:text-slate-500">
             <FiSearch className="w-4 h-4" />
           </span>
           <input
@@ -27,7 +27,7 @@ export const Navbar = ({
             placeholder={searchPlaceholder}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150"
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150"
           />
         </div>
       ) : (
@@ -37,8 +37,8 @@ export const Navbar = ({
       {/* Date, Time & Profile Tools */}
       <div className="flex items-center gap-6">
         {/* Date & Time Widget */}
-        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 shadow-sm">
-          <div className="flex items-center gap-1.5 border-r border-slate-200 pr-3">
+        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 shadow-sm">
+          <div className="flex items-center gap-1.5 border-r border-slate-200 dark:border-slate-700 pr-3">
             <FiCalendar className="text-orange-500" />
             <span>{systemDate}</span>
           </div>
@@ -49,7 +49,7 @@ export const Navbar = ({
         </div>
 
         {/* Notifications Button */}
-        <button className="relative p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-50 border border-slate-100 transition-all">
+        <button className="relative p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all">
           <FiBell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
         </button>
@@ -63,7 +63,7 @@ export const Navbar = ({
           className="flex items-center gap-3 text-left hover:opacity-85 transition-opacity"
         >
           <div className="text-right">
-            <span className="block text-sm font-bold text-slate-800 leading-tight">
+            <span className="block text-sm font-bold text-slate-800 dark:text-white leading-tight">
               {userName}
             </span>
             <span className="inline-block mt-0.5 text-[10px] font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-orange-200/50">

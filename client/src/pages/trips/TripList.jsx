@@ -26,7 +26,7 @@ export const TripList = ({ searchQuery = '' }) => {
     switch (status) {
       case 'Draft':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-50 text-slate-500 border border-slate-200">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700">
             <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
             Draft
           </span>);
@@ -65,15 +65,15 @@ export const TripList = ({ searchQuery = '' }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+      <div className="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
             Trip Logistics Dispatch
             <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2.5 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
               Operations
             </span>
           </h1>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Dispatch and manage all freight routes, assign vehicles, drivers and monitor progress.
           </p>
         </div>
@@ -90,20 +90,20 @@ export const TripList = ({ searchQuery = '' }) => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-wrap items-end gap-5">
-        <div className="flex items-center gap-2 text-slate-800 font-bold text-sm mb-auto py-2">
+      <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-wrap items-end gap-5">
+        <div className="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-sm mb-auto py-2">
           <FiFilter className="text-orange-500 w-4.5 h-4.5" />
           <span className="uppercase tracking-wider text-xs">Filter Trips</span>
         </div>
 
         <div className="flex-1 min-w-[200px]">
-          <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+          <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
             Trip Status
           </label>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-700 dark:text-slate-200 font-medium focus:outline-none">
             
             <option value="All">All Statuses</option>
             <option value="Draft">Draft</option>
@@ -115,7 +115,7 @@ export const TripList = ({ searchQuery = '' }) => {
 
         <button
           onClick={() => {setStatusFilter('All');}}
-          className="h-[38px] flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-lg px-4 text-xs font-bold transition-all border border-slate-200">
+          className="h-[38px] flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-600 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg px-4 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700">
           
           <FiRefreshCw />
           <span>RESET</span>
@@ -127,44 +127,44 @@ export const TripList = ({ searchQuery = '' }) => {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
         
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trip ID</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Route</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Vehicle</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Driver</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cargo Weight</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Distance</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">ETA</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Actions</th>
+            <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Trip ID</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Route</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Vehicle</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Driver</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Cargo Weight</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Distance</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Status</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">ETA</th>
+              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {filtered.length > 0 ?
             filtered.map((trip) =>
-            <tr key={trip.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-slate-800 text-sm">{trip.id}</td>
-                  <td className="px-6 py-4 text-xs font-semibold text-slate-600">{trip.source} to {trip.destination}</td>
-                  <td className="px-6 py-4 font-semibold text-slate-700 text-sm">
+            <tr key={trip.id} className="hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900/50 transition-colors">
+                  <td className="px-6 py-4 font-bold text-slate-800 dark:text-white text-sm">{trip.id}</td>
+                  <td className="px-6 py-4 text-xs font-semibold text-slate-600 dark:text-slate-300">{trip.source} to {trip.destination}</td>
+                  <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200 text-sm">
                     <div>
                       <span>{trip.vehicleName}</span>
-                      <span className="block text-[9px] font-mono text-slate-400 tracking-wider uppercase mt-0.5">{trip.vehicleReg}</span>
+                      <span className="block text-[9px] font-mono text-slate-400 dark:text-slate-500 tracking-wider uppercase mt-0.5">{trip.vehicleReg}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-xs font-semibold text-slate-600">{trip.driverName}</td>
-                  <td className="px-6 py-4 text-xs font-mono text-slate-500">{trip.cargoWeight.toLocaleString()} kg</td>
-                  <td className="px-6 py-4 text-xs font-mono text-slate-500">{trip.distance.toLocaleString()} km</td>
+                  <td className="px-6 py-4 text-xs font-semibold text-slate-600 dark:text-slate-300">{trip.driverName}</td>
+                  <td className="px-6 py-4 text-xs font-mono text-slate-500 dark:text-slate-400 dark:text-slate-500">{trip.cargoWeight.toLocaleString()} kg</td>
+                  <td className="px-6 py-4 text-xs font-mono text-slate-500 dark:text-slate-400 dark:text-slate-500">{trip.distance.toLocaleString()} km</td>
                   <td className="px-6 py-4">{getStatusBadge(trip.status)}</td>
-                  <td className="px-6 py-4 font-mono text-xs font-semibold text-slate-600">{trip.eta}</td>
+                  <td className="px-6 py-4 font-mono text-xs font-semibold text-slate-600 dark:text-slate-300">{trip.eta}</td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-1.5">
                       <button
                     onClick={() => handleViewDetails(trip.id)}
-                    className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-800 font-bold text-[10px] px-2 py-1 rounded transition-all"
+                    className="inline-flex items-center gap-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white font-bold text-[10px] px-2 py-1 rounded transition-all"
                     title="View Details">
                     
                         <FiEye />
@@ -218,7 +218,7 @@ export const TripList = ({ searchQuery = '' }) => {
             ) :
 
             <tr>
-                <td colSpan={9} className="px-6 py-12 text-center text-slate-400 font-medium text-sm">
+                <td colSpan={9} className="px-6 py-12 text-center text-slate-400 dark:text-slate-500 font-medium text-sm">
                   No trips found matching filters.
                 </td>
               </tr>

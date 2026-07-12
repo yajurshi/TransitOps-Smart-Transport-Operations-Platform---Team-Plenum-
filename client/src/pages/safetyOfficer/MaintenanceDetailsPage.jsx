@@ -10,23 +10,23 @@ export const MaintenanceDetailsPage = () => {
     <SafetyOfficerPageShell activeTab="Maintenance" title={`${job.id} Details`} subtitle="Service record and safety impact.">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <SectionCard title="Work order" subtitle="Maintenance metadata.">
-          <div className="space-y-4 text-sm text-slate-600">
-            <div><span className="font-semibold text-slate-800">Vehicle:</span> {job.vehicle}</div>
-            <div><span className="font-semibold text-slate-800">Type:</span> {job.type}</div>
-            <div><span className="font-semibold text-slate-800">Owner:</span> {job.owner}</div>
-            <div><span className="font-semibold text-slate-800">Due:</span> {job.due}</div>
-            <div><span className="font-semibold text-slate-800">Findings:</span> {job.findings}</div>
+          <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+            <div><span className="font-semibold text-slate-800 dark:text-white">Vehicle:</span> {job.vehicle}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Type:</span> {job.type}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Owner:</span> {job.owner}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Due:</span> {job.due}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Findings:</span> {job.findings}</div>
           </div>
         </SectionCard>
         <SectionCard title="Safety status" subtitle="Current work state.">
           <div className="space-y-4">
             <Badge value={job.status} />
             <Badge value={job.priority} />
-            <p className="text-sm text-slate-600">The vehicle remains blocked until the work order is closed and reviewed by the safety desk.</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">The vehicle remains blocked until the work order is closed and reviewed by the safety desk.</p>
           </div>
         </SectionCard>
         <SectionCard title="Actions" subtitle="Recommended next steps.">
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <p>• Confirm replacement parts and sign-off documentation.</p>
             <p>• Re-inspect the vehicle before release from the workshop.</p>
             <p>• Update dispatch if the repair impacts route availability.</p>

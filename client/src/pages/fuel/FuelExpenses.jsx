@@ -39,15 +39,15 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+      <div className="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
             Fuel & Expenses Ledger
-            <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
+            <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 uppercase tracking-widest">
               Read Only
             </span>
           </h1>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Monitor fleet refueling logs, administrative expenses, and vehicle cost totals.
           </p>
         </div>
@@ -55,32 +55,32 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
 
           {/* KPI Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Total Refuel Expenditures</span>
-                <span className="text-2xl font-black text-slate-800 block mt-1">${totalFuelCost.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-1">Refueled {initialFuelLogs.reduce((sum, i) => sum + i.liters, 0)} Liters</span>
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block">Total Refuel Expenditures</span>
+                <span className="text-2xl font-black text-slate-800 dark:text-white block mt-1">${totalFuelCost.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block mt-1">Refueled {initialFuelLogs.reduce((sum, i) => sum + i.liters, 0)} Liters</span>
               </div>
               <div className="p-3 bg-orange-50 rounded-lg text-orange-500 border border-orange-100">
                 <FaGasPump className="w-5 h-5" />
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">General Fleet Expenses</span>
-                <span className="text-2xl font-black text-slate-800 block mt-1">${totalOtherExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-1">tolls, insurance, maintenance</span>
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block">General Fleet Expenses</span>
+                <span className="text-2xl font-black text-slate-800 dark:text-white block mt-1">${totalOtherExpenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block mt-1">tolls, insurance, maintenance</span>
               </div>
               <div className="p-3 bg-orange-50 rounded-lg text-orange-500 border border-orange-100">
                 <FaDollarSign className="w-5 h-5" />
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Total Cost Summary</span>
-                <span className="text-2xl font-black text-slate-800 block mt-1">${(totalFuelCost + totalOtherExpenses).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block">Total Cost Summary</span>
+                <span className="text-2xl font-black text-slate-800 dark:text-white block mt-1">${(totalFuelCost + totalOtherExpenses).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                 <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider block mt-1">Within Monthly Allocation Limit</span>
               </div>
               <div className="p-3 bg-emerald-50 rounded-lg text-emerald-500 border border-emerald-100">
@@ -90,20 +90,20 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
           </div>
 
           {/* Search/Filters */}
-          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-wrap items-end gap-5">
-            <div className="flex items-center gap-2 text-slate-800 font-bold text-sm mb-auto py-2">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-wrap items-end gap-5">
+            <div className="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-sm mb-auto py-2">
               <FiFilter className="text-orange-500 w-4.5 h-4.5" />
               <span className="uppercase tracking-wider text-xs">Filter Expenses</span>
             </div>
 
             <div className="flex-1 min-w-[200px]">
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+              <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                 Expense Category
               </label>
               <select
                 value={expenseFilter}
                 onChange={(e) => setExpenseFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-700 dark:text-slate-200 font-medium focus:outline-none">
                 
                 <option value="All">All Categories</option>
                 <option value="Tolls">Tolls</option>
@@ -115,7 +115,7 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
 
             <button
               onClick={() => {setExpenseFilter('All');setSearchQuery('');}}
-              className="h-[38px] flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-lg px-4 text-xs font-bold transition-all border border-slate-200">
+              className="h-[38px] flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-600 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg px-4 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700">
               
               <FiRefreshCw />
               <span>RESET</span>
@@ -126,28 +126,28 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             {/* Refueling Table */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
-              <div className="px-6 py-4 border-b border-slate-100">
-                <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">Refueling Logs</h3>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden flex flex-col">
+              <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+                <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">Refueling Logs</h3>
               </div>
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Refuel ID</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Vehicle</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Refuel Date</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Liters</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Cost</th>
+                  <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Refuel ID</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Vehicle</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Refuel Date</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Liters</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-right">Cost</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredFuel.map((f) =>
-                  <tr key={f.id} className="hover:bg-slate-50/50">
-                      <td className="px-6 py-4 font-bold text-slate-800 text-xs">{f.id}</td>
-                      <td className="px-6 py-4 font-mono text-xs text-slate-600">{f.vehicle}</td>
-                      <td className="px-6 py-4 text-xs font-semibold text-slate-500">{f.date}</td>
-                      <td className="px-6 py-4 text-xs font-semibold text-slate-500">{f.liters} L</td>
-                      <td className="px-6 py-4 text-right font-mono text-xs font-bold text-slate-700">${f.cost.toFixed(2)}</td>
+                  <tr key={f.id} className="hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900/50">
+                      <td className="px-6 py-4 font-bold text-slate-800 dark:text-white text-xs">{f.id}</td>
+                      <td className="px-6 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{f.vehicle}</td>
+                      <td className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500">{f.date}</td>
+                      <td className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500">{f.liters} L</td>
+                      <td className="px-6 py-4 text-right font-mono text-xs font-bold text-slate-700 dark:text-slate-200">${f.cost.toFixed(2)}</td>
                     </tr>
                   )}
                 </tbody>
@@ -155,37 +155,37 @@ export const FuelExpenses = ({ searchQuery = '' }) => {
             </div>
 
             {/* General Expenses Table */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
-              <div className="px-6 py-4 border-b border-slate-100">
-                <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">Operational Expense Logs</h3>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden flex flex-col">
+              <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+                <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">Operational Expense Logs</h3>
               </div>
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Expense ID</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Vehicle</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Category</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Date</th>
-                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Cost</th>
+                  <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Expense ID</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Vehicle</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Category</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Date</th>
+                    <th className="px-6 py-3.5 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-right">Cost</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredExpenses.map((e) =>
-                  <tr key={e.id} className="hover:bg-slate-50/50">
-                      <td className="px-6 py-4 font-bold text-slate-800 text-xs">{e.id}</td>
-                      <td className="px-6 py-4 font-mono text-xs text-slate-600">{e.vehicle}</td>
-                      <td className="px-6 py-4 text-xs font-semibold text-slate-500">
+                  <tr key={e.id} className="hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900/50">
+                      <td className="px-6 py-4 font-bold text-slate-800 dark:text-white text-xs">{e.id}</td>
+                      <td className="px-6 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{e.vehicle}</td>
+                      <td className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500">
                         <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${
                       e.type === 'Tolls' ? 'bg-blue-50 text-blue-600 border border-blue-200' :
                       e.type === 'Maintenance' ? 'bg-orange-50 text-orange-600 border border-orange-200' :
-                      e.type === 'Permit' ? 'bg-slate-50 text-slate-600 border border-slate-200' :
+                      e.type === 'Permit' ? 'bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700' :
                       'bg-emerald-50 text-emerald-600 border border-emerald-200'}`
                       }>
                           {e.type}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-xs text-slate-500">{e.date}</td>
-                      <td className="px-6 py-4 text-right font-mono text-xs font-bold text-slate-700">${e.cost.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">{e.date}</td>
+                      <td className="px-6 py-4 text-right font-mono text-xs font-bold text-slate-700 dark:text-slate-200">${e.cost.toFixed(2)}</td>
                     </tr>
                   )}
                 </tbody>

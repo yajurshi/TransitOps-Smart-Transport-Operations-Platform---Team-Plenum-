@@ -10,27 +10,27 @@ export const TripDetailsPage = () => {
     <SafetyOfficerPageShell activeTab="Trips" title={`${trip.id} Details`} subtitle="Detailed trip safety inspection.">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <SectionCard title="Trip summary" subtitle="Core movement details.">
-          <div className="space-y-4 text-sm text-slate-600">
-            <div><span className="font-semibold text-slate-800">Title:</span> {trip.title}</div>
-            <div><span className="font-semibold text-slate-800">Driver:</span> {trip.driver}</div>
-            <div><span className="font-semibold text-slate-800">Vehicle:</span> {trip.vehicle}</div>
-            <div><span className="font-semibold text-slate-800">Route:</span> {trip.route}</div>
-            <div><span className="font-semibold text-slate-800">Distance:</span> {trip.distance}</div>
+          <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+            <div><span className="font-semibold text-slate-800 dark:text-white">Title:</span> {trip.title}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Driver:</span> {trip.driver}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Vehicle:</span> {trip.vehicle}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Route:</span> {trip.route}</div>
+            <div><span className="font-semibold text-slate-800 dark:text-white">Distance:</span> {trip.distance}</div>
           </div>
         </SectionCard>
         <SectionCard title="Operational state" subtitle="Live safety posture.">
           <div className="space-y-4">
             <Badge value={trip.status} />
             <Badge value={trip.hazard} />
-            <div className="text-sm text-slate-600 space-y-2">
-              <p>Departure: <span className="font-semibold text-slate-800">{trip.start}</span></p>
-              <p>ETA: <span className="font-semibold text-slate-800">{trip.eta}</span></p>
-              <p>Hazard escalation: <span className="font-semibold text-slate-800">Pending manual review</span></p>
+            <div className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <p>Departure: <span className="font-semibold text-slate-800 dark:text-white">{trip.start}</span></p>
+              <p>ETA: <span className="font-semibold text-slate-800 dark:text-white">{trip.eta}</span></p>
+              <p>Hazard escalation: <span className="font-semibold text-slate-800 dark:text-white">Pending manual review</span></p>
             </div>
           </div>
         </SectionCard>
         <SectionCard title="Actions" subtitle="Next steps.">
-          <div className="space-y-3 text-sm text-slate-600">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <p>• Validate stop-by-stop compliance if a delay is reported.</p>
             <p>• Attach incident photos or notes to the trip record.</p>
             <p>• Notify the driver and dispatcher of any route deviations.</p>

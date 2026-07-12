@@ -6,7 +6,7 @@ export const RoleCard = ({ role, description }) => {
   const Icon = icons[role] || Truck;
 
   return (
-    <article className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm transition hover:bg-white/15">
+    <article className="rounded-xl border border-white/15 bg-white dark:bg-slate-800/10 p-3 backdrop-blur-sm transition hover:bg-white dark:bg-slate-800/15">
       <Icon className="mb-2 h-4 w-4 text-amber-300" aria-hidden="true" />
       <h3 className="text-sm font-semibold text-white">{role}</h3>
       <p className="mt-1 text-xs leading-5 text-slate-300">{description}</p>

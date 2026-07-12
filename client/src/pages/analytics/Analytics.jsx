@@ -23,22 +23,22 @@ export const Analytics = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+      <div className="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
             Operational Analytics
             <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
               Intelligence
             </span>
           </h1>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Analyze fleet utilization trends, fuel efficiencies, and operational budget parameters.
           </p>
         </div>
 
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-slate-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
+          className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 active:scale-95 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
           
           <FiDownload className="w-4 h-4" />
           <span>Export CSV</span>
@@ -49,15 +49,15 @@ export const Analytics = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Chart 1: Fleet Utilization Trend */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
-              <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Fleet Utilization Trend (Weekly)</span>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Fleet Utilization Trend (Weekly)</span>
                 <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Avg 83%</span>
               </div>
               <div className="h-48 flex items-end gap-3 justify-between pt-4">
                 {[65, 78, 72, 85, 83, 90, 83].map((val, idx) =>
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2">
-                    <div className="w-full bg-slate-100 rounded-t-lg h-36 relative overflow-hidden border border-slate-200/50">
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg h-36 relative overflow-hidden border border-slate-200 dark:border-slate-700/50">
                       <motion.div
                       className="absolute bottom-0 left-0 right-0 bg-orange-500 rounded-t-lg"
                       initial={{ height: 0 }}
@@ -65,16 +65,16 @@ export const Analytics = () => {
                       transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.05 }} />
                     
                     </div>
-                    <span className="text-[10px] font-bold text-slate-400 font-mono">W{idx + 1}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono">W{idx + 1}</span>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Chart 2: Refuel efficiency parameters */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
-              <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Fuel Efficiency Comparison (km/L)</span>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Fuel Efficiency Comparison (km/L)</span>
                 <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">Target: 5.0</span>
               </div>
               <div className="h-48 flex items-end gap-5 justify-between pt-4">
@@ -85,7 +85,7 @@ export const Analytics = () => {
                 { label: 'Sedan Courier', val: 12.4 }].
                 map((item, idx) =>
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2">
-                    <div className="w-12 bg-slate-100 rounded-t-lg h-36 relative overflow-hidden border border-slate-200/50">
+                    <div className="w-12 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-36 relative overflow-hidden border border-slate-200 dark:border-slate-700/50">
                       <motion.div
                       className="absolute bottom-0 left-0 right-0 bg-orange-500 rounded-t-lg"
                       initial={{ height: 0 }}
@@ -93,18 +93,18 @@ export const Analytics = () => {
                       transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.05 }} />
                     
                     </div>
-                    <span className="text-[9px] font-bold text-slate-500 text-center leading-tight">{item.label}</span>
-                    <span className="text-[10px] font-bold text-slate-400 font-mono mt-0.5">{item.val} L</span>
+                    <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 text-center leading-tight">{item.label}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono mt-0.5">{item.val} L</span>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Chart 3: Operational Cost Distributions */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
-              <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Operational Cost Breakdown (USD)</span>
-                <span className="text-[10px] font-bold text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">$2,450 Total</span>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Operational Cost Breakdown (USD)</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">$2,450 Total</span>
               </div>
               <div className="space-y-3.5">
                 {[
@@ -114,11 +114,11 @@ export const Analytics = () => {
                 { label: 'Tolls & Admin', cost: 200, pct: 8, color: 'bg-slate-400' }].
                 map((item, idx) =>
                 <div key={idx}>
-                    <div className="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                    <div className="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                       <span>{item.label}</span>
                       <span className="font-mono">${item.cost.toLocaleString()} ({item.pct}%)</span>
                     </div>
-                    <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200/50">
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700/50">
                       <motion.div
                       className={`h-full ${item.color}`}
                       initial={{ width: 0 }}
@@ -132,16 +132,16 @@ export const Analytics = () => {
             </div>
 
             {/* Chart 4: Trip Completion Performance */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
-              <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Trip Execution Rates</span>
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Trip Execution Rates</span>
                 <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Target: 95%+</span>
               </div>
               <div className="flex items-center gap-8 py-4">
                 <div className="relative w-28 h-28 flex items-center justify-center">
                   {/* Decorative circle chart */}
                   <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="56" cy="56" r="48" stroke="#f1f5f9" strokeWidth="8" fill="transparent" />
+                    <circle cx="56" cy="56" r="48" className="stroke-slate-100 dark:stroke-slate-800" strokeWidth="8" fill="transparent" />
                     <motion.circle
                       cx="56"
                       cy="56"
@@ -156,16 +156,16 @@ export const Analytics = () => {
                     
                   </svg>
                   <div className="absolute flex flex-col items-center justify-center">
-                    <span className="text-xl font-black text-slate-800">96.8%</span>
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Success</span>
+                    <span className="text-xl font-black text-slate-800 dark:text-white">96.8%</span>
+                    <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Success</span>
                   </div>
                 </div>
                 <div className="space-y-1.5 flex-1">
-                  <div className="flex justify-between text-xs font-bold text-slate-600">
+                  <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
                     <span>Performance Tier</span>
                     <span className="text-orange-600">Optimal Class</span>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-semibold leading-normal">
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 font-semibold leading-normal">
                     This safety and completion percentage is calculated based on prompt delivery timestamps and route compliance.
                   </p>
                 </div>
