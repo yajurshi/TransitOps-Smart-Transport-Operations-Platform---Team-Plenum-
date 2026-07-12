@@ -3,7 +3,7 @@
 ## Smart Transport Operations Platform
 
 <p align="center">
-  <img src="./client/public/logo.png" alt="TransitOps Logo" width="220"/>
+  <img src="./client/public/logo.jpeg" alt="TransitOps Logo" width="220"/>
 </p>
 
 <p align="center">
