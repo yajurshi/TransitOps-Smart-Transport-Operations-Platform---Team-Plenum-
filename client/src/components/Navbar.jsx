@@ -423,11 +423,11 @@ export const Navbar = ({
         <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 shadow-sm">
           <div className="flex items-center gap-1.5 border-r border-slate-200 dark:border-slate-700 pr-3">
             <FiCalendar className="text-orange-500" />
-            <span>{systemDate}</span>
+            <span>{dateStr}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <FiClock className="text-orange-500" />
-            <span className="font-mono">{systemTime}</span>
+            <span className="font-mono">{timeStr}</span>
           </div>
         </div>
 
