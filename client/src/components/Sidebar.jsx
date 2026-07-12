@@ -3,21 +3,47 @@ import { FiGrid, FiUsers, FiBarChart2, FiSettings, FiTool } from 'react-icons/fi
 import { FaTruck, FaRoute, FaGasPump } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-interface SidebarProps {
-  activeTab?: string;
-}
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Dashboard' }) => {
+
+
+
+import { useApp } from '../context/AppContext';
+
+export const Sidebar = ({ activeTab = 'Dashboard' }) => {
+  const { setCurrentView, setSelectedVehicleReg, setSelectedDriverName, setSelectedTripId, setSelectedMaintenanceId } = useApp();
+
   const menuItems = [
-    { name: 'Dashboard', icon: <FiGrid className="w-5 h-5" /> },
-    { name: 'Fleet', icon: <FaTruck className="w-5 h-5" /> },
-    { name: 'Drivers', icon: <FiUsers className="w-5 h-5" /> },
-    { name: 'Trips', icon: <FaRoute className="w-5 h-5" /> },
-    { name: 'Maintenance', icon: <FiTool className="w-5 h-5" /> },
-    { name: 'Fuel & Expenses', icon: <FaGasPump className="w-5 h-5" /> },
-    { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" /> },
-    { name: 'Settings', icon: <FiSettings className="w-5 h-5" /> },
-  ];
+  { name: 'Dashboard', icon: <FiGrid className="w-5 h-5" /> },
+  { name: 'Fleet', icon: <FaTruck className="w-5 h-5" /> },
+  { name: 'Drivers', icon: <FiUsers className="w-5 h-5" /> },
+  { name: 'Trips', icon: <FaRoute className="w-5 h-5" /> },
+  { name: 'Maintenance', icon: <FiTool className="w-5 h-5" /> },
+  { name: 'Fuel & Expenses', icon: <FaGasPump className="w-5 h-5" /> },
+  { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" /> },
+  { name: 'Settings', icon: <FiSettings className="w-5 h-5" /> }];
+
+
+  const viewMap = {
+    'Dashboard': 'Dashboard',
+    'Fleet': 'Fleet',
+    'Drivers': 'Drivers',
+    'Trips': 'Trips',
+    'Maintenance': 'Maintenance',
+    'Fuel & Expenses': 'FuelExpenses',
+    'Analytics': 'Analytics',
+    'Settings': 'Settings'
+  };
+
+  const handleNavigate = (name) => {
+    const view = viewMap[name];
+    if (view) {
+      setSelectedVehicleReg(null);
+      setSelectedDriverName(null);
+      setSelectedTripId(null);
+      setSelectedMaintenanceId(null);
+      setCurrentView(view);
+    }
+  };
 
   return (
     <div className="w-64 bg-white text-slate-700 h-screen fixed left-0 top-0 flex flex-col border-r border-slate-200 z-30 shadow-sm">
@@ -46,27 +72,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Dashboard' }) => 
           return (
             <button
               key={item.name}
-              disabled={item.name !== 'Dashboard'} // Hackathon scope: only Dashboard is interactive
+              onClick={() => handleNavigate(item.name)}
               className={`w-full relative flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
-                isActive
-                  ? 'text-orange-600'
-                  : 'hover:bg-slate-50 hover:text-slate-900 text-slate-500 cursor-not-allowed'
-              }`}
-            >
+              isActive ?
+              'text-orange-600' :
+              'hover:bg-slate-50 hover:text-slate-900 text-slate-500'}`
+              }>
+              
               {/* Active Background Animation */}
-              {isActive && (
-                <motion.div
-                  layoutId="activeNavIndicator"
-                  className="absolute inset-0 bg-orange-50 border-r-4 border-orange-500 rounded-lg -z-10"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
+              {isActive &&
+              <motion.div
+                layoutId="activeNavIndicator"
+                className="absolute inset-0 bg-orange-50 border-r-4 border-orange-500 rounded-lg -z-10"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+
+              }
               <span className={`transition-transform duration-200 ${isActive ? 'scale-110 text-orange-500' : 'group-hover:scale-110'}`}>
                 {item.icon}
               </span>
               <span>{item.name}</span>
-            </button>
-          );
+            </button>);
+
         })}
       </nav>
 
@@ -78,6 +104,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Dashboard' }) => 
           <span className="font-semibold text-emerald-600 uppercase tracking-wider text-[9px]">Online</span>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };

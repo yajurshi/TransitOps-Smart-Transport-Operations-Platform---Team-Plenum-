@@ -10,62 +10,21 @@ import { FaTruck, FaRoute, FaCheckCircle, FaExclamationTriangle } from 'react-ic
 import { FiCheckCircle, FiTool, FiUsers, FiPercent, FiTrendingUp } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
-// Define Types
-interface TripItem {
-  id: string;
-  route: string;
-  vehicle: string;
-  vehicleReg: string;
-  vehicleType: 'Heavy Duty' | 'Light Truck' | 'Van' | 'Sedan';
-  driver: string;
-  status: 'On Trip' | 'Completed' | 'Dispatched' | 'Draft';
-  eta: string;
-  region: 'North' | 'South' | 'East' | 'West';
-}
 
-interface VehicleItem {
-  reg: string;
-  name: string;
-  type: 'Heavy Duty' | 'Light Truck' | 'Van' | 'Sedan';
-  status: 'Available' | 'On Trip' | 'In Shop' | 'Retired';
-  region: 'North' | 'South' | 'East' | 'West';
-}
 
-// Dummy Data
-const initialTrips: TripItem[] = [
-  { id: 'TR-1001', route: 'Chicago to Detroit', vehicle: 'Heavy Duty Truck', vehicleReg: 'TX-9081', vehicleType: 'Heavy Duty', driver: 'Liam Neeson', status: 'On Trip', eta: '2h 15m', region: 'North' },
-  { id: 'TR-1002', route: 'Houston to Dallas', vehicle: 'Transit Van', vehicleReg: 'TX-4322', vehicleType: 'Van', driver: 'Sarah Jenkins', status: 'Completed', eta: '--', region: 'South' },
-  { id: 'TR-1003', route: 'New York to Boston', vehicle: 'Sedan Courier', vehicleReg: 'NY-7811', vehicleType: 'Sedan', driver: 'Bruce Wayne', status: 'Dispatched', eta: '4h 30m', region: 'East' },
-  { id: 'TR-1004', route: 'Los Angeles to San Francisco', vehicle: 'Heavy Duty Rig', vehicleReg: 'CA-8899', vehicleType: 'Heavy Duty', driver: 'Dom Toretto', status: 'Draft', eta: '--', region: 'West' },
-  { id: 'TR-1005', route: 'Seattle to Portland', vehicle: 'Light Pickup', vehicleReg: 'WA-5561', vehicleType: 'Light Truck', driver: 'Jane Doe', status: 'On Trip', eta: '1h 05m', region: 'North' },
-  { id: 'TR-1006', route: 'Miami to Orlando', vehicle: 'Transit Van', vehicleReg: 'FL-2099', vehicleType: 'Van', driver: 'John Smith', status: 'Completed', eta: '--', region: 'South' },
-  { id: 'TR-1007', route: 'Philadelphia to Newark', vehicle: 'Sedan Courier', vehicleReg: 'PA-1102', vehicleType: 'Sedan', driver: 'Clark Kent', status: 'On Trip', eta: '45m', region: 'East' },
-  { id: 'TR-1008', route: 'Denver to Aspen', vehicle: 'Heavy Duty Truck', vehicleReg: 'CO-9988', vehicleType: 'Heavy Duty', driver: 'Diana Prince', status: 'Dispatched', eta: '3h 10m', region: 'West' }
-];
 
-const initialVehicles: VehicleItem[] = [
-  { reg: 'TX-9081', name: 'Heavy Duty Truck', type: 'Heavy Duty', status: 'On Trip', region: 'North' },
-  { reg: 'TX-4322', name: 'Transit Van', type: 'Van', status: 'Available', region: 'South' },
-  { reg: 'NY-7811', name: 'Sedan Courier', type: 'Sedan', status: 'Available', region: 'East' },
-  { reg: 'CA-8899', name: 'Heavy Duty Rig', type: 'Heavy Duty', status: 'In Shop', region: 'West' },
-  { reg: 'WA-5561', name: 'Light Pickup', type: 'Light Truck', status: 'On Trip', region: 'North' },
-  { reg: 'FL-2099', name: 'Transit Van', type: 'Van', status: 'Available', region: 'South' },
-  { reg: 'PA-1102', name: 'Sedan Courier', type: 'Sedan', status: 'On Trip', region: 'East' },
-  { reg: 'CO-9988', name: 'Heavy Duty Truck', type: 'Heavy Duty', status: 'Available', region: 'West' },
-  { reg: 'IL-3044', name: 'Light Pickup', type: 'Light Truck', status: 'Retired', region: 'North' },
-  { reg: 'GA-2011', name: 'Transit Van', type: 'Van', status: 'In Shop', region: 'South' },
-  { reg: 'MA-6712', name: 'Sedan Courier', type: 'Sedan', status: 'Available', region: 'East' },
-  { reg: 'AZ-4455', name: 'Heavy Duty Rig', type: 'Heavy Duty', status: 'Available', region: 'West' }
-];
 
 const recentActivity = [
-  { id: 1, time: '10:45 AM', type: 'warning', text: 'Vehicle CA-8899 reported a check engine warning (In Shop).' },
-  { id: 2, time: '10:12 AM', type: 'success', text: 'Trip TR-1002 completed successfully by driver Sarah Jenkins.' },
-  { id: 3, time: '09:30 AM', type: 'info', text: 'New trip TR-1003 dispatched to driver Bruce Wayne.' },
-  { id: 4, time: '08:15 AM', type: 'info', text: 'Driver Dom Toretto submitted pre-trip safety checklist.' }
-];
+{ id: 1, time: '10:45 AM', type: 'warning', text: 'Vehicle CA-8899 reported a check engine warning (In Shop).' },
+{ id: 2, time: '10:12 AM', type: 'success', text: 'Trip TR-1002 completed successfully by driver Sarah Jenkins.' },
+{ id: 3, time: '09:30 AM', type: 'info', text: 'New trip TR-1003 dispatched to driver Bruce Wayne.' },
+{ id: 4, time: '08:15 AM', type: 'info', text: 'Driver Dom Toretto submitted pre-trip safety checklist.' }];
 
-export const DashboardPage: React.FC = () => {
+
+import { useApp } from '../../context/AppContext';
+
+export const DashboardPage = () => {
+  const { vehicles, trips, drivers, maintenance } = useApp();
   // Read-only User/Role (Remove role switching)
   const activeUser = { name: 'Alex Mercer', role: 'Fleet Manager' };
 
@@ -84,49 +43,53 @@ export const DashboardPage: React.FC = () => {
 
   // Filtered Vehicles
   const filteredVehicles = useMemo(() => {
-    return initialVehicles.filter((vehicle) => {
+    return vehicles.filter((vehicle) => {
       const matchesType = vehicleType === 'All' || vehicle.type === vehicleType;
       const matchesRegion = region === 'All' || vehicle.region === region;
-      const matchesSearch = searchQuery === '' || 
-        vehicle.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        vehicle.reg.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = searchQuery === '' ||
+      vehicle.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      vehicle.reg.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesType && matchesRegion && matchesSearch;
     });
-  }, [vehicleType, region, searchQuery]);
+  }, [vehicles, vehicleType, region, searchQuery]);
 
   // Filtered Trips (for Table)
   const filteredTrips = useMemo(() => {
-    return initialTrips.filter((trip) => {
-      const matchesType = vehicleType === 'All' || trip.vehicleType === vehicleType;
+    return trips.filter((trip) => {
+      const matchingVeh = vehicles.find((v) => v.reg === trip.vehicleReg);
+      const vehicleTypeVal = matchingVeh ? matchingVeh.type : 'Sedan';
+
+      const matchesType = vehicleType === 'All' || vehicleTypeVal === vehicleType;
       const matchesStatus = status === 'All' || trip.status === status;
       const matchesRegion = region === 'All' || trip.region === region;
       const matchesSearch = searchQuery === '' ||
-        trip.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        trip.route.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        trip.driver.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        trip.vehicle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        trip.vehicleReg.toLowerCase().includes(searchQuery.toLowerCase());
+      trip.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.source.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.destination.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.driverName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.vehicleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.vehicleReg.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesType && matchesStatus && matchesRegion && matchesSearch;
     });
-  }, [vehicleType, status, region, searchQuery]);
+  }, [vehicles, trips, vehicleType, status, region, searchQuery]);
 
   // Operational metrics calculated dynamically
   const metrics = useMemo(() => {
     const totalVehicles = filteredVehicles.length;
-    const activeVehicles = filteredVehicles.filter(v => v.status === 'On Trip').length;
-    const availableVehicles = filteredVehicles.filter(v => v.status === 'Available').length;
-    const inShopVehicles = filteredVehicles.filter(v => v.status === 'In Shop').length;
-    const retiredVehicles = filteredVehicles.filter(v => v.status === 'Retired').length;
+    const activeVehicles = filteredVehicles.filter((v) => v.status === 'On Trip').length;
+    const availableVehicles = filteredVehicles.filter((v) => v.status === 'Available').length;
+    const inShopVehicles = filteredVehicles.filter((v) => v.status === 'In Shop').length;
+    const retiredVehicles = filteredVehicles.filter((v) => v.status === 'Retired').length;
 
-    const activeTripsCount = filteredTrips.filter(t => t.status === 'On Trip').length;
-    
+    const activeTripsCount = filteredTrips.filter((t) => t.status === 'Dispatched').length;
+
     // Simulate drivers on duty dynamically based on available resources
     const driversOnDuty = totalVehicles - retiredVehicles;
 
     // Fleet utilization percentage
-    const utilization = totalVehicles > 0 
-      ? Math.round((activeVehicles / (totalVehicles - retiredVehicles)) * 100) 
-      : 0;
+    const utilization = totalVehicles > 0 ?
+    Math.round(activeVehicles / (totalVehicles - retiredVehicles) * 100) :
+    0;
 
     return {
       activeVehicles,
@@ -139,14 +102,26 @@ export const DashboardPage: React.FC = () => {
     };
   }, [filteredVehicles, filteredTrips]);
 
+  const mappedTrips = useMemo(() => {
+    return filteredTrips.map((t) => ({
+      id: t.id,
+      route: `${t.source} to ${t.destination}`,
+      vehicle: t.vehicleName,
+      vehicleReg: t.vehicleReg,
+      driver: t.driverName,
+      status: t.status === 'Cancelled' ? 'Draft' : t.status,
+      eta: t.eta
+    }));
+  }, [filteredTrips]);
+
   // Sparkline/Chart path animation variables for fuel cost distribution trend
   const sparklineData = [35, 42, 38, 48, 55, 62, 58];
   const chartWidth = 320;
   const chartHeight = 80;
   const chartPoints = useMemo(() => {
     return sparklineData.map((val, idx) => {
-      const x = (idx / (sparklineData.length - 1)) * chartWidth;
-      const y = chartHeight - (val / Math.max(...sparklineData)) * (chartHeight - 10);
+      const x = idx / (sparklineData.length - 1) * chartWidth;
+      const y = chartHeight - val / Math.max(...sparklineData) * (chartHeight - 10);
       return `${x},${y}`;
     }).join(' ');
   }, []);
@@ -163,8 +138,8 @@ export const DashboardPage: React.FC = () => {
           userName={activeUser.name}
           role={activeUser.role}
           searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
+          onSearchChange={setSearchQuery} />
+        
 
         {/* Content Body */}
         <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
@@ -197,8 +172,8 @@ export const DashboardPage: React.FC = () => {
             setStatus={setStatus}
             region={region}
             setRegion={setRegion}
-            onClearFilters={handleClearFilters}
-          />
+            onClearFilters={handleClearFilters} />
+          
 
           {/* KPI Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
@@ -208,48 +183,48 @@ export const DashboardPage: React.FC = () => {
               trend="+2 running"
               trendType="positive"
               icon={<FaTruck className="w-4 h-4 text-orange-500" />}
-              delayIndex={0}
-            />
+              delayIndex={0} />
+            
             <KpiCard
               title="Available Vehicles"
               value={metrics.availableVehicles}
               trend="Optimal"
               trendType="neutral"
               icon={<FiCheckCircle className="w-4 h-4 text-orange-500" />}
-              delayIndex={1}
-            />
+              delayIndex={1} />
+            
             <KpiCard
               title="Vehicles In Shop"
               value={metrics.inShopVehicles}
               trend="-1 active repair"
               trendType="positive"
               icon={<FiTool className="w-4 h-4 text-orange-500" />}
-              delayIndex={2}
-            />
+              delayIndex={2} />
+            
             <KpiCard
               title="Active Trips"
               value={metrics.activeTripsCount}
               trend="100% On-Track"
               trendType="positive"
               icon={<FaRoute className="w-4 h-4 text-orange-500" />}
-              delayIndex={3}
-            />
+              delayIndex={3} />
+            
             <KpiCard
               title="Drivers On Duty"
               value={metrics.driversOnDuty}
               trend="No alerts"
               trendType="neutral"
               icon={<FiUsers className="w-4 h-4 text-orange-500" />}
-              delayIndex={4}
-            />
+              delayIndex={4} />
+            
             <KpiCard
               title="Fleet Utilization"
               value={`${metrics.utilization}%`}
               trend="Target 85%"
               trendType="positive"
               icon={<FiPercent className="w-4 h-4 text-orange-500" />}
-              delayIndex={5}
-            />
+              delayIndex={5} />
+            
           </div>
 
           {/* Tables, Progress bars, and Live Activity panels */}
@@ -257,9 +232,67 @@ export const DashboardPage: React.FC = () => {
             
             {/* Left/Middle Column (span 2): Recent Trips Table */}
             <div className="lg:col-span-2 flex flex-col gap-6">
-              <RecentTripsTable trips={filteredTrips} />
+              <RecentTripsTable trips={mappedTrips} />
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Available Dispatch Operators */}
+                <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col">
+                  <div className="pb-3 border-b border-slate-100 flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest flex items-center gap-1.5">
+                      <FiUsers className="text-orange-500 w-4 h-4" />
+                      Ready Operators
+                    </h3>
+                    <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      Available
+                    </span>
+                  </div>
+                  <div className="space-y-3.5 flex-1 overflow-y-auto max-h-[180px]">
+                    {drivers.filter((d) => d.status === 'Available').slice(0, 3).map((driver) =>
+                    <div key={driver.name} className="flex justify-between items-center bg-slate-50 border border-slate-200/50 rounded-lg p-2.5">
+                        <div>
+                          <span className="block text-xs font-bold text-slate-700">{driver.name}</span>
+                          <span className="block text-[9px] text-slate-400 font-semibold mt-0.5">{driver.licenseCategory} • {driver.licenseNumber}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded ${
+                        driver.safetyScore >= 90 ? 'bg-emerald-50 text-emerald-700' :
+                        driver.safetyScore >= 80 ? 'bg-amber-50 text-amber-700' :
+                        'bg-rose-50 text-rose-700'}`
+                        }>
+                            Score: {driver.safetyScore}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
 
+                {/* Active Fleet Maintenance */}
+                <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col">
+                  <div className="pb-3 border-b border-slate-100 flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-slate-800 text-xs uppercase tracking-widest flex items-center gap-1.5">
+                      <FiTool className="text-orange-500 w-4 h-4" />
+                      Fleet shop log
+                    </h3>
+                    <span className="text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      In Repairs
+                    </span>
+                  </div>
+                  <div className="space-y-3.5 flex-1 overflow-y-auto max-h-[180px]">
+                    {maintenance.filter((m) => m.status === 'In Progress' || m.status === 'Scheduled').slice(0, 3).map((m) =>
+                    <div key={m.id} className="flex justify-between items-center bg-slate-50 border border-slate-200/50 rounded-lg p-2.5">
+                        <div>
+                          <span className="block text-xs font-bold text-slate-700">{m.vehicleName}</span>
+                          <span className="block text-[9px] text-rose-600 font-bold mt-0.5">{m.issue}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="block text-[9px] text-slate-400 font-bold uppercase tracking-wider font-mono">ETA: {m.expectedCompletion}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Right Column (span 1): Vehicle Status Panel & Live Activity */}
@@ -271,8 +304,8 @@ export const DashboardPage: React.FC = () => {
                   onTrip: metrics.activeVehicles,
                   inShop: metrics.inShopVehicles,
                   retired: metrics.retiredVehicles
-                }}
-              />
+                }} />
+              
 
               {/* Fuel Trend Visualization Graph (DHL Style Dashboard) */}
               <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col">
@@ -301,8 +334,8 @@ export const DashboardPage: React.FC = () => {
                     </defs>
                     <path
                       d={`M 0,${chartHeight} L ${chartPoints} L ${chartWidth},${chartHeight} Z`}
-                      fill="url(#gradient)"
-                    />
+                      fill="url(#gradient)" />
+                    
                     {/* Animated Line */}
                     <motion.path
                       d={`M ${chartPoints}`}
@@ -312,8 +345,8 @@ export const DashboardPage: React.FC = () => {
                       strokeLinecap="round"
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
-                      transition={{ duration: 1.2, ease: 'easeInOut' }}
-                    />
+                      transition={{ duration: 1.2, ease: 'easeInOut' }} />
+                    
                   </svg>
                 </div>
 
@@ -338,22 +371,22 @@ export const DashboardPage: React.FC = () => {
 
                 {/* Timeline activity list */}
                 <div className="space-y-4 flex-1 flex flex-col justify-start">
-                  {recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex gap-3 items-start group">
+                  {recentActivity.map((activity) =>
+                  <div key={activity.id} className="flex gap-3 items-start group">
                       <div className="mt-0.5">
-                        {activity.type === 'warning' ? (
-                          <div className="w-5 h-5 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500">
+                        {activity.type === 'warning' ?
+                      <div className="w-5 h-5 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500">
                             <FaExclamationTriangle className="w-2.5 h-2.5" />
-                          </div>
-                        ) : activity.type === 'success' ? (
-                          <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-500">
+                          </div> :
+                      activity.type === 'success' ?
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-500">
                             <FaCheckCircle className="w-2.5 h-2.5" />
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-500">
+                          </div> :
+
+                      <div className="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-500">
                             <FaTruck className="w-2.5 h-2.5" />
                           </div>
-                        )}
+                      }
                       </div>
                       <div className="flex-1">
                         <p className="text-xs font-semibold text-slate-700 leading-normal group-hover:text-slate-900 transition-colors">
@@ -364,7 +397,7 @@ export const DashboardPage: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
@@ -373,6 +406,6 @@ export const DashboardPage: React.FC = () => {
           </div>
         </main>
       </div>
-    </div>
-  );
+    </div>);
+
 };

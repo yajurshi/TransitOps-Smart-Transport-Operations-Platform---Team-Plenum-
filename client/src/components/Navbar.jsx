@@ -1,19 +1,22 @@
 import React from 'react';
 import { FiSearch, FiBell, FiCalendar, FiClock } from 'react-icons/fi';
 
-interface NavbarProps {
-  userName: string;
-  role: string;
-  onSearchChange: (query: string) => void;
-  searchQuery: string;
-}
 
-export const Navbar: React.FC<NavbarProps> = ({
+
+
+
+
+
+
+import { useApp } from '../context/AppContext';
+
+export const Navbar = ({
   userName,
   role,
   onSearchChange,
-  searchQuery,
+  searchQuery
 }) => {
+  const { setCurrentView } = useApp();
   // Current Date/Time info (using static time from context: 2026-07-12 11:29)
   const systemDate = 'Sun, Jul 12, 2026';
   const systemTime = '11:29 AM';
@@ -30,8 +33,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           placeholder="Search vehicles, routes, drivers..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150"
-        />
+          className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150" />
+        
       </div>
 
       {/* Date, Time & Profile Tools */}
@@ -57,8 +60,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Divider */}
         <div className="h-8 w-px bg-slate-200" />
 
-        {/* Current User Info */}
-        <div className="flex items-center gap-3">
+        {/* Current User Info (Interactive) */}
+        <button
+          onClick={() => setCurrentView('Profile')}
+          className="flex items-center gap-3 text-left hover:opacity-85 transition-opacity">
+          
           <div className="text-right">
             <span className="block text-sm font-bold text-slate-800 leading-tight">
               {userName}
@@ -69,14 +75,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Profile Avatar */}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold border-2 border-white shadow-md ring-2 ring-orange-100 cursor-default">
-            {userName
-              .split(' ')
-              .map((n) => n[0])
-              .join('')}
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold border-2 border-white shadow-md ring-2 ring-orange-100">
+            {userName.
+            split(' ').
+            map((n) => n[0]).
+            join('')}
           </div>
-        </div>
+        </button>
       </div>
-    </header>
-  );
+    </header>);
+
 };
