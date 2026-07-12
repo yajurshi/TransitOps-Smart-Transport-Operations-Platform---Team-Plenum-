@@ -52,7 +52,7 @@ export const VehicleStatusPanel = ({
         <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">
           Vehicle Status
         </h3>
-        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
+        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
           {total} Total
         </span>
       </div>
@@ -63,7 +63,7 @@ export const VehicleStatusPanel = ({
           <div key={item.label}>
             <div className="flex justify-between items-center text-sm font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
               <span>{item.label}</span>
-              <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">
                 {item.count} ({item.percentage})
               </span>
             </div>

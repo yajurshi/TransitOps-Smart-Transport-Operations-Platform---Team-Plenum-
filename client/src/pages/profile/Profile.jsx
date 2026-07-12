@@ -34,7 +34,7 @@ export const Profile = () => {
       <div className="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">User Account Profile</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Manage your credentials, change password, and check role information.
           </p>
         </div>
@@ -58,15 +58,15 @@ export const Profile = () => {
 
               <div className="w-full pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3 text-left">
                 <div>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Email Address</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Email Address</span>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block mt-0.5">alex.mercer@transitops.com</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Mobile Phone</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Mobile Phone</span>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block mt-0.5">+1 555-019-382</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Security Department</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Security Department</span>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block mt-0.5">Logistics & Route Dispatch</span>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export const Profile = () => {
 
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                     Current Password
                   </label>
                   <input
@@ -111,7 +111,7 @@ export const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                     New Secure Password
                   </label>
                   <input
@@ -124,7 +124,7 @@ export const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                     Confirm New Password
                   </label>
                   <input

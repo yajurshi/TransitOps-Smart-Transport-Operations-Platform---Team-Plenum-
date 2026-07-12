@@ -31,14 +31,14 @@ export const Analytics = () => {
               Intelligence
             </span>
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Analyze fleet utilization trends, fuel efficiencies, and operational budget parameters.
           </p>
         </div>
 
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 active:scale-95 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+          className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 active:scale-95 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
           
           <FiDownload className="w-4 h-4" />
           <span>Export CSV</span>
@@ -65,7 +65,7 @@ export const Analytics = () => {
                       transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.05 }} />
                     
                     </div>
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono">W{idx + 1}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-mono">W{idx + 1}</span>
                   </div>
                 )}
               </div>
@@ -93,8 +93,8 @@ export const Analytics = () => {
                       transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.05 }} />
                     
                     </div>
-                    <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 text-center leading-tight">{item.label}</span>
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono mt-0.5">{item.val} L</span>
+                    <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 text-center leading-tight">{item.label}</span>
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-mono mt-0.5">{item.val} L</span>
                   </div>
                 )}
               </div>
@@ -104,7 +104,7 @@ export const Analytics = () => {
             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
               <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
                 <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Operational Cost Breakdown (USD)</span>
-                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">$2,450 Total</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">$2,450 Total</span>
               </div>
               <div className="space-y-3.5">
                 {[
@@ -157,7 +157,7 @@ export const Analytics = () => {
                   </svg>
                   <div className="absolute flex flex-col items-center justify-center">
                     <span className="text-xl font-black text-slate-800 dark:text-white">96.8%</span>
-                    <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Success</span>
+                    <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Success</span>
                   </div>
                 </div>
                 <div className="space-y-1.5 flex-1">
@@ -165,7 +165,7 @@ export const Analytics = () => {
                     <span>Performance Tier</span>
                     <span className="text-orange-600">Optimal Class</span>
                   </div>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 font-semibold leading-normal">
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-semibold leading-normal">
                     This safety and completion percentage is calculated based on prompt delivery timestamps and route compliance.
                   </p>
                 </div>

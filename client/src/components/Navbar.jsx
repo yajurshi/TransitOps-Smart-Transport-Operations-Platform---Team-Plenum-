@@ -19,7 +19,7 @@ export const Navbar = ({
       {/* Search Bar */}
       {showSearch ? (
         <div className="relative w-96">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 dark:text-slate-500">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">
             <FiSearch className="w-4 h-4" />
           </span>
           <input
@@ -37,7 +37,7 @@ export const Navbar = ({
       {/* Date, Time & Profile Tools */}
       <div className="flex items-center gap-6">
         {/* Date & Time Widget */}
-        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 shadow-sm">
+        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 shadow-sm">
           <div className="flex items-center gap-1.5 border-r border-slate-200 dark:border-slate-700 pr-3">
             <FiCalendar className="text-orange-500" />
             <span>{systemDate}</span>
@@ -49,7 +49,7 @@ export const Navbar = ({
         </div>
 
         {/* Notifications Button */}
-        <button className="relative p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all">
+        <button className="relative p-2 text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 dark:hover:text-slate-200 dark:text-slate-300 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all">
           <FiBell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
         </button>

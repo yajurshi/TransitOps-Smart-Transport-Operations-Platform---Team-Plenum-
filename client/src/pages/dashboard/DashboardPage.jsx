@@ -154,13 +154,13 @@ export const DashboardPage = () => {
                 Live
               </span>
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
               Real-time operational dashboard for fleet coordination, driver dispatch, and cost tracking.
             </p>
           </div>
           {/* Export logs control */}
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 active:scale-95 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+            <button className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 active:scale-95 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
               <span>Export logs</span>
             </button>
           </div>
@@ -252,7 +252,7 @@ export const DashboardPage = () => {
                     <div key={driver.name} className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-2.5">
                       <div>
                         <span className="block text-xs font-bold text-slate-700 dark:text-slate-200">{driver.name}</span>
-                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 font-semibold mt-0.5">{driver.licenseCategory} • {driver.licenseNumber}</span>
+                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-semibold mt-0.5">{driver.licenseCategory} • {driver.licenseNumber}</span>
                       </div>
                       <div className="text-right">
                         <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded ${
@@ -287,7 +287,7 @@ export const DashboardPage = () => {
                         <span className="block text-[9px] text-rose-600 font-bold mt-0.5">{m.issue}</span>
                       </div>
                       <div className="text-right">
-                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">ETA: {m.expectedCompletion}</span>
+                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">ETA: {m.expectedCompletion}</span>
                       </div>
                     </div>
                   ))}
@@ -315,7 +315,7 @@ export const DashboardPage = () => {
                   <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">
                     Fuel Cost Trend
                   </h3>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">Weekly cost distribution overview.</p>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">Weekly cost distribution overview.</p>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                   <FiTrendingUp className="w-3.5 h-3.5" />
@@ -349,7 +349,7 @@ export const DashboardPage = () => {
                 </svg>
               </div>
 
-              <div className="flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">
+              <div className="flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">
                 <span>Mon</span>
                 <span>Wed</span>
                 <span>Fri</span>
@@ -391,7 +391,7 @@ export const DashboardPage = () => {
                       <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 leading-normal group-hover:text-slate-900 transition-colors">
                         {activity.text}
                       </p>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold font-mono tracking-wider block mt-0.5 uppercase">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold font-mono tracking-wider block mt-0.5 uppercase">
                         {activity.time}
                       </span>
                     </div>
@@ -432,7 +432,7 @@ export const DashboardPage = () => {
             <FaExclamationTriangle className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-black text-slate-800 dark:text-white">Access Restricted</h2>
-          <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 max-w-md">
+          <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 max-w-md">
             Your current role ({activeUser.role}) does not have permission to view the {currentView} module. 
             If you believe this is an error, please contact the system administrator.
           </p>

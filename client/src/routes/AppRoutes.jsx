@@ -11,6 +11,7 @@ import { MaintenanceDetailsPage } from '../pages/safetyOfficer/MaintenanceDetail
 import { AnalyticsPage } from '../pages/safetyOfficer/AnalyticsPage';
 import { SettingsPage } from '../pages/safetyOfficer/SettingsPage';
 import { ProfilePage } from '../pages/safetyOfficer/ProfilePage';
+import { FinancialDashboard } from '../pages/analytics/FinancialDashboard';
 import { ProtectedRoute } from './ProtectedRoute';
 
 const RoleDashboard = () => <DashboardPage />;
@@ -24,7 +25,7 @@ export const AppRoutes = () => (
 		<Route path="/dashboard/fleet" element={<ProtectedRoute><RoleDashboard /></ProtectedRoute>} />
 		<Route path="/dashboard/dispatcher" element={<ProtectedRoute><RoleDashboard /></ProtectedRoute>} />
 		<Route path="/dashboard/safety" element={<ProtectedRoute><RoleDashboard /></ProtectedRoute>} />
-		<Route path="/dashboard/finance" element={<ProtectedRoute><RoleDashboard /></ProtectedRoute>} />
+		<Route path="/dashboard/finance" element={<ProtectedRoute><FinancialDashboard /></ProtectedRoute>} />
 		<Route path="/dashboard/safety/drivers" element={<ProtectedRoute><DriversPage /></ProtectedRoute>} />
 		<Route path="/dashboard/safety/drivers/:driverId" element={<ProtectedRoute><DriverDetailsPage /></ProtectedRoute>} />
 		<Route path="/dashboard/safety/trips" element={<ProtectedRoute><TripsPage /></ProtectedRoute>} />

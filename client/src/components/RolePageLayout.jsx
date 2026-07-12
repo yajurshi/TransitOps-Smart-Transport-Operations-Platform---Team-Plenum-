@@ -25,7 +25,7 @@ export const RolePageLayout = ({ activeTab, title, subtitle, children, showSearc
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 {title && <h1 className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">{title}</h1>}
-                {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">{subtitle}</p>}
+                {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">{subtitle}</p>}
               </div>
             </div>
           )}

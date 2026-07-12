@@ -79,13 +79,13 @@ export const CreateTrip = () => {
       <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-700 pb-4">
         <button
           onClick={() => setCurrentView('Trips')}
-          className="p-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white transition-all shadow-sm">
+          className="p-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white dark:hover:text-white dark:text-white transition-all shadow-sm">
           
           <FiArrowLeft className="w-5 h-5" />
         </button>
         <div>
           <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">Create Trip Dispatch</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
             Register a new route, allocate cargo weight, and assign available vehicles and drivers.
           </p>
         </div>
@@ -109,7 +109,7 @@ export const CreateTrip = () => {
               
               {/* Source */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Source Location *
                 </label>
                 <input
@@ -123,7 +123,7 @@ export const CreateTrip = () => {
 
               {/* Destination */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Destination *
                 </label>
                 <input
@@ -137,7 +137,7 @@ export const CreateTrip = () => {
 
               {/* Vehicle Dropdown */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Assign Vehicle (Available Only) *
                 </label>
                 <select
@@ -153,7 +153,7 @@ export const CreateTrip = () => {
                   )}
                 </select>
                 {selectedVehicleCapacity &&
-                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mt-1">
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider block mt-1">
                     Selected Vehicle Capacity: {selectedVehicleCapacity.toLocaleString()} kg
                   </span>
                 }
@@ -161,7 +161,7 @@ export const CreateTrip = () => {
 
               {/* Driver Dropdown */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Assign Driver (Available Only) *
                 </label>
                 <select
@@ -180,7 +180,7 @@ export const CreateTrip = () => {
 
               {/* Cargo Weight */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Cargo Weight (kg) *
                 </label>
                 <input
@@ -194,7 +194,7 @@ export const CreateTrip = () => {
 
               {/* Planned Distance */}
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                   Planned Distance (km) *
                 </label>
                 <input
@@ -210,7 +210,7 @@ export const CreateTrip = () => {
 
             {/* Notes */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
+              <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
                 Dispatch Notes & Instructions
               </label>
               <textarea
@@ -226,7 +226,7 @@ export const CreateTrip = () => {
             <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
               <button
                 onClick={() => setCurrentView('Trips')}
-                className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 transition-all active:scale-95">
+                className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 transition-all active:scale-95">
                 
                 Cancel
               </button>

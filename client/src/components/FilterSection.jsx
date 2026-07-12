@@ -19,7 +19,7 @@ export const FilterSection = ({
 
       {/* Vehicle Type Dropdown */}
       <div className="flex-1 min-w-[200px]">
-        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
           Vehicle Type
         </label>
         <select
@@ -37,7 +37,7 @@ export const FilterSection = ({
 
       {/* Status Dropdown */}
       <div className="flex-1 min-w-[200px]">
-        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
           Status
         </label>
         <select
@@ -55,7 +55,7 @@ export const FilterSection = ({
 
       {/* Region Dropdown */}
       <div className="flex-1 min-w-[200px]">
-        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
           Region
         </label>
         <select
@@ -74,7 +74,7 @@ export const FilterSection = ({
       {/* Clear Filters Button */}
       <button
         onClick={onClearFilters}
-        className="h-[38px] flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white rounded-lg px-4 text-sm font-semibold transition-all border border-slate-200 dark:border-slate-700 active:scale-95"
+        className="h-[38px] flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white dark:hover:text-white dark:text-white rounded-lg px-4 text-sm font-semibold transition-all border border-slate-200 dark:border-slate-700 active:scale-95"
       >
         <FiRefreshCw className="w-3.5 h-3.5" />
         <span>Reset</span>

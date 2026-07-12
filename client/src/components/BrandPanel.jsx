@@ -30,12 +30,12 @@ export const BrandPanel = () => (
               </div>
             </div>
             <div className="grid gap-3">
-              <div className="rounded-3xl border border-white/10 bg-slate-950/35 p-4 text-center"><p className="text-[11px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Trips</p><p className="mt-2 text-2xl font-bold">128</p></div>
-              <div className="rounded-3xl border border-white/10 bg-slate-950/35 p-4 text-center"><p className="text-[11px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Uptime</p><p className="mt-2 text-2xl font-bold">99.9%</p></div>
+              <div className="rounded-3xl border border-white/10 bg-slate-950/35 p-4 text-center"><p className="text-[11px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">Trips</p><p className="mt-2 text-2xl font-bold">128</p></div>
+              <div className="rounded-3xl border border-white/10 bg-slate-950/35 p-4 text-center"><p className="text-[11px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">Uptime</p><p className="mt-2 text-2xl font-bold">99.9%</p></div>
             </div>
           </div>
           <div className="mt-5 flex items-center justify-between rounded-3xl border border-white/10 bg-slate-950/35 px-4 py-3">
-            <div><p className="text-xs text-slate-400 dark:text-slate-500">Command Center</p><p className="text-sm font-semibold text-white">Dispatch, compliance, and finance in one view</p></div>
+            <div><p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">Command Center</p><p className="text-sm font-semibold text-white">Dispatch, compliance, and finance in one view</p></div>
             <Brain className="h-7 w-7 text-sky-300" />
           </div>
         </div>
@@ -44,7 +44,7 @@ export const BrandPanel = () => (
         <p className="mt-3 max-w-xl text-sm leading-6 text-slate-200 sm:text-base">Digitize fleet operations, dispatch, maintenance, driver management, fuel tracking, and analytics from one centralized platform.</p>
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">{features.map(([title]) => <FeatureCard key={title} title={title} />)}</div>
       </div>
-      <p className="mt-8 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">TransitOps © 2026</p>
+      <p className="mt-8 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">TransitOps © 2026</p>
     </div>
   </aside>
 );
