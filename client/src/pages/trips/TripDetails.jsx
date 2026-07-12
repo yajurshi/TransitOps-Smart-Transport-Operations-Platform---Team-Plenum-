@@ -1,7 +1,5 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiArrowLeft, FiNavigation, FiCheckSquare, FiXCircle } from 'react-icons/fi';
 
 export const TripDetails = () => {
@@ -31,45 +29,35 @@ export const TripDetails = () => {
 
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Trips" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setCurrentView('Trips')}
-                className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-                
-                <FiArrowLeft className="w-5 h-5" />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-slate-800 text-sm">{trip.id}</span>
-                  {trip.status === 'Completed' &&
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">Completed</span>
-                  }
-                  {trip.status === 'Dispatched' &&
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-50 text-blue-600 border border-blue-200">Dispatched</span>
-                  }
-                  {trip.status === 'Draft' &&
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 text-slate-500 border border-slate-200">Draft</span>
-                  }
-                  {trip.status === 'Cancelled' &&
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 text-rose-600 border border-rose-200">Cancelled</span>
-                  }
-                </div>
-                <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{trip.source} to {trip.destination}</h1>
-              </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setCurrentView('Trips')}
+            className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+            
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-slate-800 text-sm">{trip.id}</span>
+              {trip.status === 'Completed' &&
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">Completed</span>
+              }
+              {trip.status === 'Dispatched' &&
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-50 text-blue-600 border border-blue-200">Dispatched</span>
+              }
+              {trip.status === 'Draft' &&
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 text-slate-500 border border-slate-200">Draft</span>
+              }
+              {trip.status === 'Cancelled' &&
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 text-rose-600 border border-rose-200">Cancelled</span>
+              }
             </div>
+            <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{trip.source} to {trip.destination}</h1>
+          </div>
+        </div>
 
             {/* Quick dispatch / completion actions */}
             <div className="flex gap-2">
@@ -257,9 +245,7 @@ export const TripDetails = () => {
               }
             </div>
 
-          </div>
-        </main>
       </div>
-    </div>);
-
+    </div>
+  );
 };

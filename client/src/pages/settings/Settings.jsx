@@ -1,6 +1,4 @@
 import React from 'react';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiSettings, FiCheck, FiX } from 'react-icons/fi';
 
 export const Settings = () => {
@@ -14,31 +12,21 @@ export const Settings = () => {
 
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Settings" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
-          {/* Header */}
-          <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                System Parameters
-                <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
-                  View Only
-                </span>
-              </h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Overview of organization configurations, regional settings, and role permissions matrix.
-              </p>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+            System Parameters
+            <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
+              View Only
+            </span>
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Overview of organization configurations, regional settings, and role permissions matrix.
+          </p>
+        </div>
+      </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
@@ -109,10 +97,7 @@ export const Settings = () => {
                 </table>
               </div>
             </div>
-
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

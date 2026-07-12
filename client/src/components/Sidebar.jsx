@@ -1,79 +1,61 @@
 import React from 'react';
 import { FiGrid, FiUsers, FiBarChart2, FiSettings, FiTool, FiLogOut } from 'react-icons/fi';
-import { FaTruck, FaRoute, FaGasPump, FaTools } from 'react-icons/fa';
+import { FaTruck, FaRoute, FaGasPump } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../hooks/useAuth';
+import { hasAccess } from '../utils/rbac';
 
 export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
   const { setCurrentView, setSelectedVehicleReg, setSelectedDriverName, setSelectedTripId, setSelectedMaintenanceId } = useApp();
   const { logout, role: authRole } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const role = propRole || authRole;
-  const isSafetyOfficer = role === 'Safety Officer';
 
-  const dispatcherItems = [
-    { name: 'Dashboard', icon: <FiGrid className="w-5 h-5" /> },
-    { name: 'Fleet', icon: <FaTruck className="w-5 h-5" /> },
-    { name: 'Drivers', icon: <FiUsers className="w-5 h-5" /> },
-    { name: 'Trips', icon: <FaRoute className="w-5 h-5" /> },
-    { name: 'Maintenance', icon: <FiTool className="w-5 h-5" /> },
-    { name: 'Fuel & Expenses', icon: <FaGasPump className="w-5 h-5" /> },
-    { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" /> },
-    { name: 'Settings', icon: <FiSettings className="w-5 h-5" /> }
+  // Define all possible modules with their viewKeys and icons
+  const allModules = [
+    { name: 'Dashboard', icon: <FiGrid className="w-5 h-5" />, viewKey: 'DashboardOverview' },
+    { name: 'Fleet', icon: <FaTruck className="w-5 h-5" />, viewKey: 'Fleet' },
+    { name: 'Drivers', icon: <FiUsers className="w-5 h-5" />, viewKey: 'Drivers' },
+    { name: 'Trips', icon: <FaRoute className="w-5 h-5" />, viewKey: 'Trips' },
+    { name: 'Maintenance', icon: <FiTool className="w-5 h-5" />, viewKey: 'Maintenance' },
+    { name: 'Fuel & Expenses', icon: <FaGasPump className="w-5 h-5" />, viewKey: 'Fuel' },
+    { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" />, viewKey: 'Analytics' },
+    { name: 'Profile', icon: <FiUsers className="w-5 h-5" />, viewKey: 'Profile' },
+    { name: 'Settings', icon: <FiSettings className="w-5 h-5" />, viewKey: 'Settings' }
   ];
 
-  const safetyItems = [
-    { name: 'Dashboard', icon: <FiGrid className="w-5 h-5" />, to: '/dashboard/safety' },
-    { name: 'Drivers', icon: <FiUsers className="w-5 h-5" />, to: '/dashboard/safety/drivers' },
-    { name: 'Trips', icon: <FaRoute className="w-5 h-5" />, to: '/dashboard/safety/trips' },
-    { name: 'Maintenance', icon: <FaTools className="w-5 h-5" />, to: '/dashboard/safety/maintenance' },
-    { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" />, to: '/dashboard/safety/analytics' },
-    { name: 'Settings', icon: <FiSettings className="w-5 h-5" />, to: '/dashboard/safety/settings' },
-    { name: 'Profile', icon: <FiUsers className="w-5 h-5" />, to: '/dashboard/safety/profile' }
-  ];
-
-  const menuItems = isSafetyOfficer ? safetyItems : dispatcherItems;
-
-  const viewMap = {
-    'Dashboard': 'Dashboard',
-    'Fleet': 'Fleet',
-    'Drivers': 'Drivers',
-    'Trips': 'Trips',
-    'Maintenance': 'Maintenance',
-    'Fuel & Expenses': 'FuelExpenses',
-    'Analytics': 'Analytics',
-    'Settings': 'Settings'
-  };
+  // Filter menu items based on RBAC matrix
+  const menuItems = allModules.filter(module => hasAccess(role, module.viewKey));
 
   const handleNavigate = (item) => {
-    if (isSafetyOfficer) {
-      navigate(item.to);
-    } else {
-      const view = viewMap[item.name];
-      if (view) {
-        setSelectedVehicleReg(null);
-        setSelectedDriverName(null);
-        setSelectedTripId(null);
-        setSelectedMaintenanceId(null);
-        setCurrentView(view);
-      }
-    }
-  };
+    // Some tabs like Fuel & Expenses map to FuelExpenses in the router
+    const viewMap = {
+      'Dashboard': 'Dashboard',
+      'Fleet': 'Fleet',
+      'Drivers': 'Drivers',
+      'Trips': 'Trips',
+      'Maintenance': 'Maintenance',
+      'Fuel & Expenses': 'FuelExpenses',
+      'Analytics': 'Analytics',
+      'Profile': 'Profile',
+      'Settings': 'Settings'
+    };
 
-  const isItemActive = (item) => {
-    if (isSafetyOfficer) {
-      return location.pathname === item.to || location.pathname.startsWith(`${item.to}/`);
+    const view = viewMap[item.name];
+    if (view) {
+      setSelectedVehicleReg(null);
+      setSelectedDriverName(null);
+      setSelectedTripId(null);
+      setSelectedMaintenanceId(null);
+      setCurrentView(view);
     }
-    return item.name === activeTab;
   };
 
   const handleLogout = () => {
     logout();
-    navigate('/login', { replace: true });
+    // Re-route to login handled by context or router
+    window.location.href = '/login';
   };
 
   return (
@@ -92,14 +74,15 @@ export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
       </div>
 
       {/* Menu Header */}
-      <div className="px-6 pt-6 pb-2">
+      <div className="px-6 pt-6 pb-2 flex justify-between items-center">
         <span className="text-[11px] text-slate-400 font-bold uppercase tracking-widest">Menu</span>
+        <span className="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold uppercase tracking-wider">{role}</span>
       </div>
 
       {/* Navigation Links with Framer Motion active animations */}
       <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
-          const isActive = isItemActive(item);
+          const isActive = item.name === activeTab;
           return (
             <button
               key={item.name}

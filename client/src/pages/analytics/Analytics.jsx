@@ -1,6 +1,4 @@
 import React from 'react';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiDownload } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
@@ -23,39 +21,29 @@ export const Analytics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Analytics" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+            Operational Analytics
+            <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+              Intelligence
+            </span>
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Analyze fleet utilization trends, fuel efficiencies, and operational budget parameters.
+          </p>
+        </div>
 
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
-          {/* Header */}
-          <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                Operational Analytics
-                <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
-                  Intelligence
-                </span>
-              </h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Analyze fleet utilization trends, fuel efficiencies, and operational budget parameters.
-              </p>
-            </div>
-
-            <button
-              onClick={handleExportCSV}
-              className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-slate-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
-              
-              <FiDownload className="w-4 h-4" />
-              <span>Export CSV</span>
-            </button>
-          </div>
+        <button
+          onClick={handleExportCSV}
+          className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-slate-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
+          
+          <FiDownload className="w-4 h-4" />
+          <span>Export CSV</span>
+        </button>
+      </div>
 
           {/* Analytics Visualizations Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -183,10 +171,7 @@ export const Analytics = () => {
                 </div>
               </div>
             </div>
-
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

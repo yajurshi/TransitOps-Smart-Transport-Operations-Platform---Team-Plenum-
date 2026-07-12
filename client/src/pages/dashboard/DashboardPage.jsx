@@ -10,6 +10,7 @@ import { FiCheckCircle, FiTool, FiUsers, FiPercent, FiTrendingUp } from 'react-i
 import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { useAuth } from '../../hooks/useAuth';
+import { hasAccess } from '../../utils/rbac';
 
 // Import all subpages
 import { VehicleList } from '../fleet/VehicleList';
@@ -37,17 +38,10 @@ export const DashboardPage = () => {
   const { vehicles, trips, drivers, maintenance, currentView } = useApp();
   const { user, role: initialRole } = useAuth();
 
-  // Switch role state for testing
-  const [activeUser, setActiveUser] = useState({
+  // Define active user based on context
+  const activeUser = {
     name: user?.fullName || 'Alex Mercer',
     role: initialRole || 'Fleet Manager'
-  });
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
-  const roles = ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'];
-
-  const handleRoleChange = (role) => {
-    setActiveUser({ name: user?.fullName || 'Alex Mercer', role });
-    setIsRoleDropdownOpen(false);
   };
 
   // Search & Filter States
@@ -412,27 +406,64 @@ export const DashboardPage = () => {
   };
 
   const renderDispatcherContent = () => {
+    const viewKeyMap = {
+      'Dashboard': 'DashboardOverview',
+      'Fleet': 'Fleet',
+      'VehicleDetails': 'VehicleDetails',
+      'Drivers': 'Drivers',
+      'DriverDetails': 'DriverDetails',
+      'Trips': 'Trips',
+      'CreateTrip': 'CreateTrip',
+      'TripDetails': 'TripDetails',
+      'Maintenance': 'Maintenance',
+      'MaintenanceDetails': 'MaintenanceDetails',
+      'FuelExpenses': 'Fuel',
+      'Analytics': 'Analytics',
+      'Settings': 'Settings',
+      'Profile': 'Profile'
+    };
+
+    const viewKey = viewKeyMap[currentView] || 'DashboardOverview';
+
+    if (!hasAccess(activeUser.role, viewKey)) {
+      return (
+        <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
+          <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center border border-rose-200 text-rose-500 mb-2">
+            <FaExclamationTriangle className="w-8 h-8" />
+          </div>
+          <h2 className="text-2xl font-black text-slate-800">Access Restricted</h2>
+          <p className="text-slate-500 max-w-md">
+            Your current role ({activeUser.role}) does not have permission to view the {currentView} module. 
+            If you believe this is an error, please contact the system administrator.
+          </p>
+          <button onClick={() => setCurrentView('Dashboard')} className="mt-4 px-6 py-2.5 bg-orange-500 text-white font-bold rounded-lg uppercase tracking-wider text-xs transition-all hover:bg-orange-600 active:scale-95">
+            Return to Dashboard
+          </button>
+        </div>
+      );
+    }
+
     switch (currentView) {
       case 'Fleet':
-        return <VehicleList />;
+        return <VehicleList searchQuery={searchQuery} />;
       case 'VehicleDetails':
         return <VehicleDetails />;
       case 'Drivers':
-        return <DriverList />;
+        return <DriverList searchQuery={searchQuery} />;
       case 'DriverDetails':
         return <DriverDetails />;
       case 'Trips':
-        return <TripList />;
+        return <TripList searchQuery={searchQuery} />;
       case 'CreateTrip':
         return <CreateTrip />;
       case 'TripDetails':
         return <TripDetails />;
       case 'Maintenance':
-        return <MaintenanceList />;
+        return <MaintenanceList searchQuery={searchQuery} />;
       case 'MaintenanceDetails':
         return <MaintenanceDetails />;
       case 'FuelExpenses':
-        return <FuelExpenses />;
+        return <FuelExpenses searchQuery={searchQuery} />;
       case 'Analytics':
         return <Analytics />;
       case 'Settings':
@@ -460,34 +491,10 @@ export const DashboardPage = () => {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
           />
-          {/* Quick role-switch trigger dropdown absolute positioned for testing */}
-          <div className="absolute right-8 top-13 z-30">
-            <button
-              onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-              className="text-[10px] text-slate-400 hover:text-slate-600 font-semibold underline bg-transparent border-0 cursor-pointer"
-            >
-              Switch Role
-            </button>
-            {isRoleDropdownOpen && (
-              <div className="absolute right-0 mt-1 w-48 bg-white border border-slate-200 rounded-lg shadow-lg py-1 z-40">
-                {roles.map((r) => (
-                  <button
-                    key={r}
-                    onClick={() => handleRoleChange(r)}
-                    className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors ${
-                      activeUser.role === r ? 'text-orange-600 bg-orange-50/50' : 'text-slate-600'
-                    }`}
-                  >
-                    {r}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Content Body */}
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-8 pt-24 space-y-6 w-full max-w-none">
           {renderDispatcherContent()}
         </main>
       </div>

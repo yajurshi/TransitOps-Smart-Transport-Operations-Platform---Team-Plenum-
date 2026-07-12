@@ -1,7 +1,5 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiArrowLeft } from 'react-icons/fi';
 import { FaGasPump, FaWrench } from 'react-icons/fa';
 
@@ -28,35 +26,25 @@ export const VehicleDetails = () => {
   const vehicleMaintenance = maintenance.filter((m) => m.vehicleReg === vehicle.reg);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Fleet" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
-          {/* Header */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setCurrentView('Fleet')}
-              className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-              
-              <FiArrowLeft className="w-5 h-5" />
-            </button>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
-                  {vehicle.type}
-                </span>
-                <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{vehicle.reg}</span>
-              </div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{vehicle.name}</h1>
-            </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setCurrentView('Fleet')}
+          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+          
+          <FiArrowLeft className="w-5 h-5" />
+        </button>
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+              {vehicle.type}
+            </span>
+            <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{vehicle.reg}</span>
           </div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{vehicle.name}</h1>
+        </div>
+      </div>
 
           {/* Details Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -214,8 +202,6 @@ export const VehicleDetails = () => {
               </tbody>
             </table>
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

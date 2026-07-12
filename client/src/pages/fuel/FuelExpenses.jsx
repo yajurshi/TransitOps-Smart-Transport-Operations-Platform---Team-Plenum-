@@ -1,26 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiFilter, FiRefreshCw } from 'react-icons/fi';
 import { FaGasPump, FaDollarSign } from 'react-icons/fa';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const initialFuelLogs = [
 { id: 'FL-901', vehicle: 'TX-9081', date: '2026-07-10', liters: 180, cost: 288.00, odometer: 124500 },
@@ -36,8 +16,7 @@ const initialExpenses = [
 { id: 'EX-304', vehicle: 'NY-7811', type: 'Insurance', cost: 300.00, date: '2026-07-05', description: 'Monthly courier liability insurance.' }];
 
 
-export const FuelExpenses = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+export const FuelExpenses = ({ searchQuery = '' }) => {
   const [expenseFilter, setExpenseFilter] = useState('All');
 
   // Filter calculations
@@ -58,31 +37,21 @@ export const FuelExpenses = () => {
   const totalOtherExpenses = useMemo(() => initialExpenses.reduce((sum, item) => sum + item.cost, 0), []);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Fuel & Expenses" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
-          {/* Header */}
-          <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                Fuel & Expenses Ledger
-                <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
-                  Read Only
-                </span>
-              </h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Monitor fleet refueling logs, administrative expenses, and vehicle cost totals.
-              </p>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+            Fuel & Expenses Ledger
+            <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
+              Read Only
+            </span>
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Monitor fleet refueling logs, administrative expenses, and vehicle cost totals.
+          </p>
+        </div>
+      </div>
 
           {/* KPI Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -222,10 +191,7 @@ export const FuelExpenses = () => {
                 </tbody>
               </table>
             </div>
-
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiLock, FiLogOut } from 'react-icons/fi';
 
 export const Profile = () => {
@@ -31,26 +29,16 @@ export const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Settings" /> {/* Active setting highlighted */}
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-4xl w-full mx-auto">
-          {/* Header */}
-          <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight">User Account Profile</h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Manage your credentials, change password, and check role information.
-              </p>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight">User Account Profile</h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Manage your credentials, change password, and check role information.
+          </p>
+        </div>
+      </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
@@ -156,10 +144,7 @@ export const Profile = () => {
                 </button>
               </form>
             </div>
-
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

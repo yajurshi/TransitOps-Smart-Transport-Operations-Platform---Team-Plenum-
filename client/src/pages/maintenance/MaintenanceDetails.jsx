@@ -1,7 +1,5 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiArrowLeft, FiTool } from 'react-icons/fi';
 
 export const MaintenanceDetails = () => {
@@ -23,35 +21,25 @@ export const MaintenanceDetails = () => {
   const matchingVehicle = vehicles.find((v) => v.reg === record.vehicleReg);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Maintenance" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-3xl w-full mx-auto">
-          {/* Header */}
-          <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
-            <button
-              onClick={() => setCurrentView('Maintenance')}
-              className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-              
-              <FiArrowLeft className="w-5 h-5" />
-            </button>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
-                  Task ID: {record.id}
-                </span>
-                <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{record.status}</span>
-              </div>
-              <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{record.issue}</h1>
-            </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
+        <button
+          onClick={() => setCurrentView('Maintenance')}
+          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+          
+          <FiArrowLeft className="w-5 h-5" />
+        </button>
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+              Task ID: {record.id}
+            </span>
+            <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{record.status}</span>
           </div>
+          <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{record.issue}</h1>
+        </div>
+      </div>
 
           {/* Details Card */}
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
@@ -110,8 +98,6 @@ export const MaintenanceDetails = () => {
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>);
-
+    </div>
+  );
 };

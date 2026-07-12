@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Sidebar } from '../../components/Sidebar';
-import { Navbar } from '../../components/Navbar';
 import { FiArrowLeft, FiAlertTriangle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
@@ -76,32 +74,22 @@ export const CreateTrip = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
-      <Sidebar activeTab="Trips" />
-      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
-        <Navbar
-          userName="Alex Mercer"
-          role="Fleet Manager"
-          searchQuery=""
-          onSearchChange={() => {}} />
-        
-
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-3xl w-full mx-auto">
-          {/* Header */}
-          <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
-            <button
-              onClick={() => setCurrentView('Trips')}
-              className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-              
-              <FiArrowLeft className="w-5 h-5" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight">Create Trip Dispatch</h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Register a new route, allocate cargo weight, and assign available vehicles and drivers.
-              </p>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
+        <button
+          onClick={() => setCurrentView('Trips')}
+          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+          
+          <FiArrowLeft className="w-5 h-5" />
+        </button>
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight">Create Trip Dispatch</h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Register a new route, allocate cargo weight, and assign available vehicles and drivers.
+          </p>
+        </div>
+      </div>
 
           {/* Validation Alert */}
           {errorMsg &&
@@ -256,9 +244,7 @@ export const CreateTrip = () => {
               </button>
             </div>
 
-          </div>
-        </main>
       </div>
-    </div>);
-
+    </div>
+  );
 };

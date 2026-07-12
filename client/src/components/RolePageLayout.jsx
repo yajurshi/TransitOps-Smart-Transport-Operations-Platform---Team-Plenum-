@@ -20,7 +20,7 @@ export const RolePageLayout = ({ activeTab, title, subtitle, children, showSearc
           searchPlaceholder={searchPlaceholder}
         />
 
-        <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-8 pt-24 space-y-6 w-full max-w-none">
           {(title || subtitle) && (
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
