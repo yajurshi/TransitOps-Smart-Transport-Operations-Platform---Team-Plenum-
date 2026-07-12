@@ -375,6 +375,38 @@ export const AppProvider = ({ children }) => {
     return true;
   };
 
+  // Driver CRUD Functions
+  const createDriver = (driverData) => {
+    if (drivers.some((d) => d.name === driverData.name)) return false;
+    setDrivers((prev) => [{ ...driverData, status: 'Available', safetyScore: 100 }, ...prev]);
+    return true;
+  };
+
+  const editDriver = (name, driverData) => {
+    setDrivers((prev) =>
+      prev.map((d) =>
+        d.name === name ? { ...d, ...driverData } : d
+      )
+    );
+    return true;
+  };
+
+  const suspendDriver = (name) => {
+    setDrivers((prev) =>
+      prev.map((d) =>
+        d.name === name ? { ...d, status: 'Suspended' } : d
+      )
+    );
+  };
+
+  const reactivateDriver = (name) => {
+    setDrivers((prev) =>
+      prev.map((d) =>
+        d.name === name && d.status === 'Suspended' ? { ...d, status: 'Available' } : d
+      )
+    );
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -401,7 +433,11 @@ export const AppProvider = ({ children }) => {
         retireVehicle,
         createMaintenance,
         editMaintenance,
-        closeMaintenance
+        closeMaintenance,
+        createDriver,
+        editDriver,
+        suspendDriver,
+        reactivateDriver
       }}>
       
       {children}

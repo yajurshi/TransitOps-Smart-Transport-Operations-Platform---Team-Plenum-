@@ -1,11 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
-import { FiFilter, FiRefreshCw, FiEye } from 'react-icons/fi';
+import { useAuth } from '../../hooks/useAuth';
+import { FiFilter, FiRefreshCw, FiEye, FiEdit2, FiSlash, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 export const DriverList = ({ searchQuery = '' }) => {
-  const { drivers, setCurrentView, setSelectedDriverName } = useApp();
+  const { drivers, setCurrentView, setSelectedDriverName, createDriver, suspendDriver, reactivateDriver } = useApp();
+  const { role } = useAuth();
+  const activeRole = role || 'Fleet Manager';
+  const isSafetyOfficer = activeRole === 'Safety Officer';
   const [statusFilter, setStatusFilter] = useState('All');
+  
+  // Custom Modal State
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newDriver, setNewDriver] = useState({ name: '', licenseNumber: '' });
 
   const filtered = useMemo(() => {
     return drivers.filter((d) => {
@@ -57,6 +65,19 @@ export const DriverList = ({ searchQuery = '' }) => {
     setCurrentView('DriverDetails');
   };
 
+  const handleCreateSubmit = (e) => {
+    e.preventDefault();
+    if (!newDriver.name) return;
+    createDriver({
+      name: newDriver.name,
+      licenseNumber: newDriver.licenseNumber || 'DL-PENDING',
+      licenseCategory: 'Standard Class',
+      expiryDate: '2028-01-01',
+    });
+    setShowCreateModal(false);
+    setNewDriver({ name: '', licenseNumber: '' });
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -64,14 +85,25 @@ export const DriverList = ({ searchQuery = '' }) => {
         <div>
           <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             Driver Registry
-            <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
-              View Only
-            </span>
+            {!isSafetyOfficer ? (
+              <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
+                View Only
+              </span>
+            ) : (
+              <span className="text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase tracking-widest">
+                Full Access
+              </span>
+            )}
           </h1>
           <p className="text-xs text-slate-500 font-medium mt-0.5">
             Centralized registry of organization-wide drivers and safety scorecards.
           </p>
         </div>
+        {isSafetyOfficer && (
+          <button onClick={() => setShowCreateModal(true)} className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 px-5 rounded-lg text-sm shadow-sm transition-all whitespace-nowrap">
+            + Create Driver
+          </button>
+        )}
       </div>
 
       {/* Filters */}
@@ -145,13 +177,27 @@ export const DriverList = ({ searchQuery = '' }) => {
                   </td>
                   <td className="px-6 py-4">{getStatusBadge(driver.status)}</td>
                   <td className="px-6 py-4 text-right">
-                    <button
-                  onClick={() => handleViewDetails(driver.name)}
-                  className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-800 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
-                  
-                      <FiEye />
-                      <span>View Details</span>
-                    </button>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => handleViewDetails(driver.name)}
+                        className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-800 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
+                        <FiEye />
+                        <span>View</span>
+                      </button>
+                      {isSafetyOfficer && (
+                        <>
+                          <button onClick={() => handleViewDetails(driver.name)} className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-blue-600 hover:text-blue-800 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
+                            <FiEdit2 /> Edit
+                          </button>
+                          <button onClick={() => suspendDriver(driver.name)} className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-rose-600 hover:text-rose-800 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
+                            <FiSlash /> Suspend
+                          </button>
+                          <button onClick={() => reactivateDriver(driver.name)} className="inline-flex items-center gap-1 bg-white hover:bg-slate-50 border border-slate-200 text-emerald-600 hover:text-emerald-800 font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
+                            <FiCheckCircle /> Reactivate
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
             ) :
@@ -165,6 +211,55 @@ export const DriverList = ({ searchQuery = '' }) => {
           </tbody>
         </table>
       </motion.div>
+
+      {/* Create Driver Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden"
+          >
+            <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <h3 className="font-black text-slate-800">Add New Driver</h3>
+              <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-slate-600 transition">
+                <FiSlash className="w-5 h-5 rotate-45" />
+              </button>
+            </div>
+            <form onSubmit={handleCreateSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Driver Full Name</label>
+                <input 
+                  type="text" 
+                  value={newDriver.name}
+                  onChange={(e) => setNewDriver({...newDriver, name: e.target.value})}
+                  required
+                  placeholder="e.g. John Doe"
+                  className="w-full text-sm font-semibold text-slate-700 p-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">License Number</label>
+                <input 
+                  type="text" 
+                  value={newDriver.licenseNumber}
+                  onChange={(e) => setNewDriver({...newDriver, licenseNumber: e.target.value})}
+                  placeholder="e.g. DL-123456"
+                  className="w-full text-sm font-semibold text-slate-700 p-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+                />
+              </div>
+              <div className="pt-4 flex gap-3">
+                <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-lg transition">
+                  Cancel
+                </button>
+                <button type="submit" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 px-4 rounded-lg shadow-sm transition">
+                  Create Driver
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
