@@ -29,10 +29,10 @@
 
 | Name   | Role                 | Contribution                        |
 | ------ | -------------------- | ----------------------------------- |
-| <Name> | Team Lead            | Architecture, Planning, Integration |
-| <Name> | Backend Developer    | APIs, Database, Server Logic        |
-| <Name> | Frontend Developer   | UI, Dashboard, User Experience      |
-| <Name> | Full Stack Developer | Features, Testing, Deployment       |
+| <Yajurshi_Dharmendra_Velani> | Team Lead            | Architecture, Planning, Integration |
+| <Hency_Patel> | Backend Developer    | APIs, Database, Server Logic        |
+| <Bhagyashree_Jadeja> | Frontend Developer   | UI, Dashboard, User Experience      |
+| <Pragati_Varu> | Full Stack Developer | Features, Testing, Deployment       |
 
 ---
 
