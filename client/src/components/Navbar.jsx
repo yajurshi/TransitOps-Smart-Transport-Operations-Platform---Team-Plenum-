@@ -1,41 +1,38 @@
 import React from 'react';
 import { FiSearch, FiBell, FiCalendar, FiClock } from 'react-icons/fi';
-
-
-
-
-
-
-
-
 import { useApp } from '../context/AppContext';
 
 export const Navbar = ({
   userName,
   role,
   onSearchChange,
-  searchQuery
+  searchQuery,
+  showSearch = true,
+  searchPlaceholder = 'Search trips, vehicles or drivers...',
 }) => {
   const { setCurrentView } = useApp();
-  // Current Date/Time info (using static time from context: 2026-07-12 11:29)
   const systemDate = 'Sun, Jul 12, 2026';
   const systemTime = '11:29 AM';
 
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 fixed top-0 right-0 left-64 z-20 shadow-sm">
       {/* Search Bar */}
-      <div className="relative w-96">
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-          <FiSearch className="w-4 h-4" />
-        </span>
-        <input
-          type="text"
-          placeholder="Search vehicles, routes, drivers..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150" />
-        
-      </div>
+      {showSearch ? (
+        <div className="relative w-96">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <FiSearch className="w-4 h-4" />
+          </span>
+          <input
+            type="text"
+            placeholder={searchPlaceholder}
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-150"
+          />
+        </div>
+      ) : (
+        <div className="flex-1" />
+      )}
 
       {/* Date, Time & Profile Tools */}
       <div className="flex items-center gap-6">
@@ -63,8 +60,8 @@ export const Navbar = ({
         {/* Current User Info (Interactive) */}
         <button
           onClick={() => setCurrentView('Profile')}
-          className="flex items-center gap-3 text-left hover:opacity-85 transition-opacity">
-          
+          className="flex items-center gap-3 text-left hover:opacity-85 transition-opacity"
+        >
           <div className="text-right">
             <span className="block text-sm font-bold text-slate-800 leading-tight">
               {userName}
@@ -76,13 +73,13 @@ export const Navbar = ({
 
           {/* Profile Avatar */}
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold border-2 border-white shadow-md ring-2 ring-orange-100">
-            {userName.
-            split(' ').
-            map((n) => n[0]).
-            join('')}
+            {userName
+              .split(' ')
+              .map((n) => n[0])
+              .join('')}
           </div>
         </button>
       </div>
-    </header>);
-
+    </header>
+  );
 };
