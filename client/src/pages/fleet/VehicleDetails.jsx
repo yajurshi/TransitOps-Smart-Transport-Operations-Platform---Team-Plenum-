@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { FiArrowLeft } from 'react-icons/fi';
+import { useAuth } from '../../hooks/useAuth';
+import { FiArrowLeft, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 import { FaGasPump, FaWrench } from 'react-icons/fa';
 
 export const VehicleDetails = () => {
-  const { selectedVehicleReg, vehicles, setCurrentView, trips, maintenance } = useApp();
-
+  const { selectedVehicleReg, vehicles, setCurrentView, trips, maintenance, editVehicle, retireVehicle } = useApp();
+  const { role } = useAuth();
   const vehicle = vehicles.find((v) => v.reg === selectedVehicleReg);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isRetireOpen, setIsRetireOpen] = useState(false);
+  const [editData, setEditData] = useState(vehicle ? { ...vehicle } : null);
 
   if (!vehicle) {
     return (
@@ -15,9 +20,20 @@ export const VehicleDetails = () => {
         <button onClick={() => setCurrentView('Fleet')} className="mt-4 text-orange-500 font-bold">
           Back to Fleet
         </button>
-      </div>);
-
+      </div>
+    );
   }
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    editVehicle(vehicle.reg, editData);
+    setIsEditOpen(false);
+  };
+
+  const handleRetire = () => {
+    retireVehicle(vehicle.reg);
+    setIsRetireOpen(false);
+  };
 
   // Get matching trips
   const vehicleTrips = trips.filter((t) => t.vehicleReg === vehicle.reg);
@@ -26,25 +42,117 @@ export const VehicleDetails = () => {
   const vehicleMaintenance = maintenance.filter((m) => m.vehicleReg === vehicle.reg);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => setCurrentView('Fleet')}
-          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-          
-          <FiArrowLeft className="w-5 h-5" />
-        </button>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
-              {vehicle.type}
-            </span>
-            <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{vehicle.reg}</span>
+      <div className="flex justify-between items-center w-full border-b border-slate-200 pb-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setCurrentView('Fleet')}
+            className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+                {vehicle.type}
+              </span>
+              <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{vehicle.reg}</span>
+            </div>
+            <h1 className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{vehicle.name}</h1>
           </div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{vehicle.name}</h1>
         </div>
+
+        {role === 'Fleet Manager' && (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => { setEditData({...vehicle}); setIsEditOpen(true); }}
+              className="bg-white border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm"
+            >
+              <FiEdit2 className="w-4 h-4" /> Edit
+            </button>
+            <button
+              onClick={() => setIsRetireOpen(true)}
+              disabled={vehicle.status === 'On Trip'}
+              className="bg-rose-50 border border-rose-200 text-rose-600 hover:text-rose-700 hover:bg-rose-100 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FiTrash2 className="w-4 h-4" /> Retire
+            </button>
+          </div>
+        )}
       </div>
+
+      {isEditOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h2 className="font-bold text-slate-800 uppercase tracking-wider">Edit Vehicle</h2>
+              <button onClick={() => setIsEditOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <FiX className="w-5 h-5" />
+              </button>
+            </div>
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Registration Number</label>
+                  <input type="text" disabled value={vehicle.reg} className="w-full bg-slate-100 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-500 font-mono cursor-not-allowed" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Vehicle Name</label>
+                  <input type="text" required value={editData.name} onChange={e => setEditData({...editData, name: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Region</label>
+                  <select value={editData.region} onChange={e => setEditData({...editData, region: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                    <option value="North">North</option>
+                    <option value="South">South</option>
+                    <option value="East">East</option>
+                    <option value="West">West</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Capacity (kg)</label>
+                  <input type="number" min="1" required value={editData.capacity} onChange={e => setEditData({...editData, capacity: Number(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Current Odometer</label>
+                  <input type="number" min="0" required value={editData.odometer} onChange={e => setEditData({...editData, odometer: Number(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Status</label>
+                  <select value={editData.status} onChange={e => setEditData({...editData, status: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                    <option value="Available">Available</option>
+                    <option value="In Shop">In Shop</option>
+                    <option value="On Trip" disabled>On Trip</option>
+                    <option value="Retired">Retired</option>
+                  </select>
+                </div>
+              </div>
+              <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
+                <button type="button" onClick={() => setIsEditOpen(false)} className="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-lg transition-colors">Cancel</button>
+                <button type="submit" className="px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-lg shadow-md transition-all active:scale-95">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isRetireOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden p-6 text-center">
+            <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FiTrash2 className="w-6 h-6 text-rose-600" />
+            </div>
+            <h2 className="font-black text-slate-800 text-lg mb-2">Retire Vehicle?</h2>
+            <p className="text-sm text-slate-500 font-medium mb-6">
+              Are you sure you want to retire <strong>{vehicle.reg}</strong>? This will permanently mark it as retired and remove it from dispatch availability.
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => setIsRetireOpen(false)} className="px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">Cancel</button>
+              <button onClick={handleRetire} className="px-4 py-2 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-md transition-all active:scale-95">Yes, Retire Vehicle</button>
+            </div>
+          </div>
+        </div>
+      )}
 
           {/* Details Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

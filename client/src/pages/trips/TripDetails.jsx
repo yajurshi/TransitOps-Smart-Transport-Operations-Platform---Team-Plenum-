@@ -1,9 +1,11 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
+import { useAuth } from '../../hooks/useAuth';
 import { FiArrowLeft, FiNavigation, FiCheckSquare, FiXCircle } from 'react-icons/fi';
 
 export const TripDetails = () => {
   const { selectedTripId, trips, setCurrentView, dispatchTrip, completeTrip, cancelTrip, vehicles, drivers } = useApp();
+  const { role } = useAuth();
 
   const trip = trips.find((t) => t.id === selectedTripId);
 
@@ -15,7 +17,6 @@ export const TripDetails = () => {
           Back to Trips
         </button>
       </div>);
-
   }
 
   const assignedVehicle = vehicles.find((v) => v.reg === trip.vehicleReg);
@@ -26,7 +27,6 @@ export const TripDetails = () => {
   { label: 'Draft Created', status: 'completed' },
   { label: 'Dispatched / In Transit', status: trip.status !== 'Draft' ? 'completed' : 'pending' },
   { label: trip.status === 'Cancelled' ? 'Trip Cancelled' : 'Completed', status: trip.status === 'Completed' || trip.status === 'Cancelled' ? 'completed' : 'pending', isSpecial: trip.status === 'Cancelled' }];
-
 
   return (
     <div className="space-y-6">
@@ -60,46 +60,48 @@ export const TripDetails = () => {
         </div>
 
             {/* Quick dispatch / completion actions */}
-            <div className="flex gap-2">
-              {trip.status === 'Draft' &&
-              <>
-                  <button
-                  onClick={() => dispatchTrip(trip.id)}
-                  className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all shadow-md shadow-orange-500/20">
-                  
-                    <FiNavigation className="w-3.5 h-3.5" />
-                    <span>Dispatch</span>
-                  </button>
-                  <button
-                  onClick={() => cancelTrip(trip.id)}
-                  className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-rose-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
-                  
-                    <FiXCircle className="w-3.5 h-3.5" />
-                    <span>Cancel Trip</span>
-                  </button>
-                </>
-              }
+            {role === 'Dispatcher' && (
+              <div className="flex gap-2">
+                {trip.status === 'Draft' &&
+                <>
+                    <button
+                    onClick={() => dispatchTrip(trip.id)}
+                    className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all shadow-md shadow-orange-500/20">
+                    
+                      <FiNavigation className="w-3.5 h-3.5" />
+                      <span>Dispatch</span>
+                    </button>
+                    <button
+                    onClick={() => cancelTrip(trip.id)}
+                    className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-rose-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
+                    
+                      <FiXCircle className="w-3.5 h-3.5" />
+                      <span>Cancel Trip</span>
+                    </button>
+                  </>
+                }
 
-              {trip.status === 'Dispatched' &&
-              <>
-                  <button
-                  onClick={() => completeTrip(trip.id)}
-                  className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all shadow-md shadow-emerald-600/20">
-                  
-                    <FiCheckSquare className="w-3.5 h-3.5" />
-                    <span>Complete Trip</span>
-                  </button>
-                  <button
-                  onClick={() => cancelTrip(trip.id)}
-                  className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-rose-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
-                  
-                    <FiXCircle className="w-3.5 h-3.5" />
-                    <span>Cancel Trip</span>
-                  </button>
-                </>
-              }
-            </div>
-          </div>
+                {trip.status === 'Dispatched' &&
+                <>
+                    <button
+                    onClick={() => completeTrip(trip.id)}
+                    className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all shadow-md shadow-emerald-600/20">
+                    
+                      <FiCheckSquare className="w-3.5 h-3.5" />
+                      <span>Complete Trip</span>
+                    </button>
+                    <button
+                    onClick={() => cancelTrip(trip.id)}
+                    className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-rose-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
+                    
+                      <FiXCircle className="w-3.5 h-3.5" />
+                      <span>Cancel Trip</span>
+                    </button>
+                  </>
+                }
+              </div>
+            )}
+      </div>
 
           {/* Timeline Visualizer */}
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">

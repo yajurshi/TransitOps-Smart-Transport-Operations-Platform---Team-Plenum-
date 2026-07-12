@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { FiArrowLeft, FiTool } from 'react-icons/fi';
+import { useAuth } from '../../hooks/useAuth';
+import { FiArrowLeft, FiTool, FiEdit2, FiCheckCircle, FiX } from 'react-icons/fi';
 
 export const MaintenanceDetails = () => {
-  const { selectedMaintenanceId, maintenance, setCurrentView, vehicles } = useApp();
+  const { selectedMaintenanceId, maintenance, setCurrentView, vehicles, editMaintenance, closeMaintenance } = useApp();
+  const { role } = useAuth();
 
   const record = maintenance.find((m) => m.id === selectedMaintenanceId);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isCloseOpen, setIsCloseOpen] = useState(false);
+  const [editData, setEditData] = useState(record ? { ...record } : null);
 
   if (!record) {
     return (
@@ -14,32 +20,125 @@ export const MaintenanceDetails = () => {
         <button onClick={() => setCurrentView('Maintenance')} className="mt-4 text-orange-500 font-bold">
           Back to Maintenance List
         </button>
-      </div>);
-
+      </div>
+    );
   }
 
   const matchingVehicle = vehicles.find((v) => v.reg === record.vehicleReg);
 
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    editMaintenance(record.id, editData);
+    setIsEditOpen(false);
+  };
+
+  const handleCloseMaintenance = () => {
+    closeMaintenance(record.id);
+    setIsCloseOpen(false);
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-200 pb-4">
-        <button
-          onClick={() => setCurrentView('Maintenance')}
-          className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
-          
-          <FiArrowLeft className="w-5 h-5" />
-        </button>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
-              Task ID: {record.id}
-            </span>
-            <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{record.status}</span>
+      <div className="flex justify-between items-center w-full border-b border-slate-200 pb-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setCurrentView('Maintenance')}
+            className="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-600 hover:text-slate-800 transition-all shadow-sm">
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+                Task ID: {record.id}
+              </span>
+              <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-wider">{record.status}</span>
+            </div>
+            <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{record.issue}</h1>
           </div>
-          <h1 className="text-xl font-black text-slate-800 tracking-tight mt-0.5">{record.issue}</h1>
         </div>
+
+        {role === 'Fleet Manager' && (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => { setEditData({...record}); setIsEditOpen(true); }}
+              className="bg-white border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm"
+            >
+              <FiEdit2 className="w-4 h-4" /> Edit
+            </button>
+            <button
+              onClick={() => setIsCloseOpen(true)}
+              disabled={record.status === 'Completed'}
+              className="bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FiCheckCircle className="w-4 h-4" /> Close Task
+            </button>
+          </div>
+        )}
       </div>
+
+      {isEditOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h2 className="font-bold text-slate-800 uppercase tracking-wider">Edit Maintenance Task</h2>
+              <button onClick={() => setIsEditOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <FiX className="w-5 h-5" />
+              </button>
+            </div>
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Issue Summary</label>
+                  <input type="text" required value={editData.issue} onChange={e => setEditData({...editData, issue: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Description / Symptoms</label>
+                  <textarea required value={editData.description} onChange={e => setEditData({...editData, description: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" rows="2" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Repair Notes (Technician)</label>
+                  <textarea value={editData.repairNotes} onChange={e => setEditData({...editData, repairNotes: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" rows="2" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Expected Completion</label>
+                  <input type="date" required value={editData.expectedCompletion} onChange={e => setEditData({...editData, expectedCompletion: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Status</label>
+                  <select value={editData.status} onChange={e => setEditData({...editData, status: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" disabled={record.status === 'Completed'}>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed" disabled>Completed</option>
+                  </select>
+                </div>
+              </div>
+              <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
+                <button type="button" onClick={() => setIsEditOpen(false)} className="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-lg transition-colors">Cancel</button>
+                <button type="submit" className="px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-lg shadow-md transition-all active:scale-95">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isCloseOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden p-6 text-center">
+            <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FiCheckCircle className="w-6 h-6 text-emerald-600" />
+            </div>
+            <h2 className="font-black text-slate-800 text-lg mb-2">Close Task?</h2>
+            <p className="text-sm text-slate-500 font-medium mb-6">
+              Are you sure you want to mark this maintenance task as completed? The vehicle will become available for dispatch again.
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => setIsCloseOpen(false)} className="px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">Cancel</button>
+              <button onClick={handleCloseMaintenance} className="px-4 py-2 text-sm font-bold text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg shadow-md transition-all active:scale-95">Yes, Close Task</button>
+            </div>
+          </div>
+        </div>
+      )}
 
           {/* Details Card */}
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">

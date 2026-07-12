@@ -1,12 +1,40 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
-import { FiFilter, FiRefreshCw, FiEye } from 'react-icons/fi';
+import { useAuth } from '../../hooks/useAuth';
+import { FiFilter, FiRefreshCw, FiEye, FiPlus, FiX } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 export const VehicleList = ({ searchQuery = '' }) => {
-  const { vehicles, setCurrentView, setSelectedVehicleReg } = useApp();
+  const { vehicles, setCurrentView, setSelectedVehicleReg, createVehicle } = useApp();
+  const { role } = useAuth();
+  
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
+  
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [newVehicle, setNewVehicle] = useState({
+    reg: '',
+    name: '',
+    type: 'Van',
+    capacity: 0,
+    cost: 0,
+    purchaseDate: new Date().toISOString().split('T')[0],
+    odometer: 0,
+    region: 'North'
+  });
+  const [createError, setCreateError] = useState('');
+
+  const handleCreateSubmit = (e) => {
+    e.preventDefault();
+    setCreateError('');
+    const success = createVehicle(newVehicle);
+    if (success) {
+      setIsCreateOpen(false);
+      setNewVehicle({ reg: '', name: '', type: 'Van', capacity: 0, cost: 0, purchaseDate: new Date().toISOString().split('T')[0], odometer: 0, region: 'North' });
+    } else {
+      setCreateError('Validation failed. Ensure Reg is unique, and numeric values are positive.');
+    }
+  };
 
   const filtered = useMemo(() => {
     return vehicles.filter((v) => {
@@ -60,21 +88,97 @@ export const VehicleList = ({ searchQuery = '' }) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       {/* Header */}
       <div className="border-b border-slate-200 pb-4 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             Fleet Directory
-            <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
-              View Only
-            </span>
+            {role !== 'Fleet Manager' && (
+              <span className="text-xs bg-slate-100 text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 uppercase tracking-widest">
+                View Only
+              </span>
+            )}
           </h1>
           <p className="text-xs text-slate-500 font-medium mt-0.5">
             Centralized registry of organization-wide vehicles and their statuses.
           </p>
         </div>
+        {role === 'Fleet Manager' && (
+          <button
+            onClick={() => setIsCreateOpen(true)}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-md active:scale-95"
+          >
+            <FiPlus className="w-4 h-4" />
+            Add Vehicle
+          </button>
+        )}
       </div>
+
+      {isCreateOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h2 className="font-bold text-slate-800 uppercase tracking-wider">Register New Vehicle</h2>
+              <button onClick={() => setIsCreateOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <FiX className="w-5 h-5" />
+              </button>
+            </div>
+            <form onSubmit={handleCreateSubmit} className="p-6 space-y-4">
+              {createError && <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg border border-red-200">{createError}</div>}
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Registration Number</label>
+                  <input type="text" required value={newVehicle.reg} onChange={e => setNewVehicle({...newVehicle, reg: e.target.value.toUpperCase()})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" placeholder="e.g. TX-9999" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Vehicle Name</label>
+                  <input type="text" required value={newVehicle.name} onChange={e => setNewVehicle({...newVehicle, name: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" placeholder="e.g. Utility Van" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Vehicle Type</label>
+                  <select value={newVehicle.type} onChange={e => setNewVehicle({...newVehicle, type: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                    <option value="Heavy Duty">Heavy Duty</option>
+                    <option value="Light Truck">Light Truck</option>
+                    <option value="Van">Van</option>
+                    <option value="Sedan">Sedan</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Region</label>
+                  <select value={newVehicle.region} onChange={e => setNewVehicle({...newVehicle, region: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                    <option value="North">North</option>
+                    <option value="South">South</option>
+                    <option value="East">East</option>
+                    <option value="West">West</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Capacity (kg)</label>
+                  <input type="number" min="1" required value={newVehicle.capacity} onChange={e => setNewVehicle({...newVehicle, capacity: Number(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Acquisition Cost ($)</label>
+                  <input type="number" min="1" required value={newVehicle.cost} onChange={e => setNewVehicle({...newVehicle, cost: Number(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Initial Odometer</label>
+                  <input type="number" min="0" required value={newVehicle.odometer} onChange={e => setNewVehicle({...newVehicle, odometer: Number(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono focus:outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Purchase Date</label>
+                  <input type="date" required value={newVehicle.purchaseDate} onChange={e => setNewVehicle({...newVehicle, purchaseDate: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500" />
+                </div>
+              </div>
+              <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
+                <button type="button" onClick={() => setIsCreateOpen(false)} className="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-lg transition-colors">Cancel</button>
+                <button type="submit" className="px-4 py-2 text-xs font-bold text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg shadow-md transition-all active:scale-95">Register Vehicle</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-wrap items-end gap-5">

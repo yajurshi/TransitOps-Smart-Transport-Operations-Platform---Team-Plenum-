@@ -138,7 +138,7 @@ export const AppProvider = ({ children }) => {
   { id: 'TR-1008', source: 'Denver', destination: 'Aspen', vehicleReg: 'CO-9988', vehicleName: 'Heavy Duty Truck', driverName: 'Diana Prince', cargoWeight: 8000, distance: 260, status: 'Draft', eta: '3h 10m', region: 'West', date: '2026-07-12' }]
   );
 
-  const [maintenance] = useState([
+  const [maintenance, setMaintenance] = useState([
   { id: 'MT-5001', vehicleReg: 'CA-8899', vehicleName: 'Heavy Duty Rig', issue: 'Engine Overheating', description: 'Coolant leak and radiator crack detected during long-haul run.', repairNotes: 'Replacing radiator unit and coolant pump.', status: 'In Progress', startDate: '2026-07-10', expectedCompletion: '2026-07-14' },
   { id: 'MT-5002', vehicleReg: 'GA-2011', vehicleName: 'Transit Van', issue: 'Brake Pad Replacement', description: 'Squealing noise reported on front brakes. Thickness checked at 3mm.', repairNotes: 'Installing premium heavy-duty front brake pads.', status: 'Scheduled', startDate: '2026-07-13', expectedCompletion: '2026-07-13' }]
   );
@@ -292,6 +292,89 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Fleet Manager CRUD Functions
+  const createVehicle = (vehicleData) => {
+    if (vehicles.some((v) => v.reg === vehicleData.reg)) return false;
+    if (vehicleData.capacity <= 0 || vehicleData.odometer < 0 || vehicleData.cost <= 0) return false;
+
+    setVehicles((prev) => [...prev, { ...vehicleData, status: 'Available' }]);
+    return true;
+  };
+
+  const editVehicle = (reg, vehicleData) => {
+    setVehicles((prev) =>
+      prev.map((v) =>
+        v.reg === reg
+          ? {
+              ...v,
+              name: vehicleData.name,
+              capacity: vehicleData.capacity,
+              region: vehicleData.region,
+              odometer: vehicleData.odometer,
+              status: vehicleData.status
+            }
+          : v
+      )
+    );
+    return true;
+  };
+
+  const retireVehicle = (reg) => {
+    const vehicle = vehicles.find((v) => v.reg === reg);
+    if (vehicle && vehicle.status === 'On Trip') return false;
+
+    setVehicles((prev) => prev.map((v) => (v.reg === reg ? { ...v, status: 'Retired' } : v)));
+    return true;
+  };
+
+  const createMaintenance = (maintenanceData) => {
+    const vehicle = vehicles.find((v) => v.reg === maintenanceData.vehicleReg);
+    if (!vehicle || vehicle.status !== 'Available') return false;
+
+    const hasActiveMaintenance = maintenance.some(
+      (m) => m.vehicleReg === maintenanceData.vehicleReg && m.status !== 'Completed'
+    );
+    if (hasActiveMaintenance) return false;
+
+    const maxId = maintenance.length > 0 ? Math.max(...maintenance.map((m) => parseInt(m.id.replace('MT-', '')))) : 5000;
+    const newMaintenance = {
+      ...maintenanceData,
+      id: `MT-${maxId + 1}`,
+      vehicleName: vehicle.name,
+      status: 'In Progress',
+      startDate: new Date().toISOString().split('T')[0]
+    };
+
+    setMaintenance((prev) => [...prev, newMaintenance]);
+
+    setVehicles((prev) =>
+      prev.map((v) => (v.reg === maintenanceData.vehicleReg ? { ...v, status: 'In Shop' } : v))
+    );
+    return true;
+  };
+
+  const editMaintenance = (id, data) => {
+    setMaintenance((prev) => prev.map((m) => (m.id === id ? { ...m, ...data } : m)));
+    return true;
+  };
+
+  const closeMaintenance = (id) => {
+    const record = maintenance.find((m) => m.id === id);
+    if (!record) return false;
+
+    setMaintenance((prev) => prev.map((m) => (m.id === id ? { ...m, status: 'Completed' } : m)));
+
+    setVehicles((prev) =>
+      prev.map((v) => {
+        if (v.reg === record.vehicleReg && v.status !== 'Retired') {
+          return { ...v, status: 'Available' };
+        }
+        return v;
+      })
+    );
+    return true;
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -312,7 +395,13 @@ export const AppProvider = ({ children }) => {
         createTrip,
         dispatchTrip,
         completeTrip,
-        cancelTrip
+        cancelTrip,
+        createVehicle,
+        editVehicle,
+        retireVehicle,
+        createMaintenance,
+        editMaintenance,
+        closeMaintenance
       }}>
       
       {children}
