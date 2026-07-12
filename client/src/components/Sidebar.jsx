@@ -1,10 +1,11 @@
 import React from 'react';
-import { FiGrid, FiUsers, FiBarChart2, FiSettings, FiTool, FiLogOut } from 'react-icons/fi';
+import { FiGrid, FiUsers, FiBarChart2, FiSettings, FiTool, FiLogOut, FiFileText } from 'react-icons/fi';
 import { FaTruck, FaRoute, FaGasPump } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../hooks/useAuth';
 import { hasAccess } from '../utils/rbac';
+import { TransitOpsLogoInline } from './TransitOpsLogo';
 
 export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
   const { setCurrentView, setSelectedVehicleReg, setSelectedDriverName, setSelectedTripId, setSelectedMaintenanceId } = useApp();
@@ -21,7 +22,7 @@ export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
     { name: 'Maintenance', icon: <FiTool className="w-5 h-5" />, viewKey: 'Maintenance' },
     { name: 'Fuel & Expenses', icon: <FaGasPump className="w-5 h-5" />, viewKey: 'Fuel' },
     { name: 'Analytics', icon: <FiBarChart2 className="w-5 h-5" />, viewKey: 'Analytics' },
-    { name: 'Profile', icon: <FiUsers className="w-5 h-5" />, viewKey: 'Profile' },
+    { name: 'Reports', icon: <FiFileText className="w-5 h-5" />, viewKey: 'Reports' },
     { name: 'Settings', icon: <FiSettings className="w-5 h-5" />, viewKey: 'Settings' }
   ];
 
@@ -37,6 +38,7 @@ export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
       'Trips': 'Trips',
       'Maintenance': 'Maintenance',
       'Fuel & Expenses': 'FuelExpenses',
+      'Reports': 'Reports',
       'Analytics': 'Analytics',
       'Profile': 'Profile',
       'Settings': 'Settings'
@@ -87,9 +89,8 @@ export const Sidebar = ({ activeTab = 'Dashboard', role: propRole }) => {
             <button
               key={item.name}
               onClick={() => handleNavigate(item)}
-              className={`w-full relative flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
-                isActive ? 'text-orange-600' : 'hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 hover:text-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500'
-              }`}
+              className={`w-full relative flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${isActive ? 'text-orange-600' : 'hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 hover:text-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500'
+                }`}
             >
               {/* Active Background Animation */}
               {isActive && (

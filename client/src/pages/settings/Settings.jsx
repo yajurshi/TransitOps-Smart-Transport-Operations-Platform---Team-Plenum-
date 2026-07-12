@@ -1,149 +1,110 @@
-import React from 'react';
-import { FiSettings, FiCheck, FiX, FiMoon, FiSun } from 'react-icons/fi';
-import { useTheme } from '../../context/ThemeContext';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import {
+  User, Building2, Bell, Shield, Settings2, ShieldAlert,
+  Palette, Database, Webhook, Activity, HeartPulse, Brain,
+  Info, HelpCircle, ChevronRight
+} from 'lucide-react';
+
+import {
+  ProfileSection,
+  OrganizationSection,
+  NotificationsSection,
+  SecuritySection,
+  FleetConfigSection,
+  RolesPermissionsSection,
+  AppearanceSection,
+  DataReportsSection,
+  IntegrationsSection,
+  ActivityLogsSection,
+  FleetHealthSection,
+  AIFleetInsightsSection,
+  AboutSystemSection,
+  HelpSupportSection
+} from './SettingsSections';
+
+const MENU_ITEMS = [
+  { id: 'profile', label: 'Profile', icon: User, roles: ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'] },
+  { id: 'organization', label: 'Organization', icon: Building2, roles: ['Fleet Manager'] },
+  { id: 'notifications', label: 'Notifications', icon: Bell, roles: ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'] },
+  { id: 'security', label: 'Security', icon: Shield, roles: ['Fleet Manager'] },
+  { id: 'fleet-config', label: 'Fleet Configuration', icon: Settings2, roles: ['Fleet Manager'] },
+  { id: 'appearance', label: 'Appearance', icon: Palette, roles: ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'] },
+  { id: 'data', label: 'Data & Reports', icon: Database, roles: ['Fleet Manager'] },
+  { id: 'integrations', label: 'Integrations', icon: Webhook, roles: ['Fleet Manager'] },
+  { id: 'health', label: 'Fleet Health', icon: HeartPulse, roles: ['Fleet Manager'] },
+  { id: 'ai', label: 'AI Fleet Insights', icon: Brain, roles: ['Fleet Manager'] },
+  { id: 'help', label: 'Help & Support', icon: HelpCircle, roles: ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'] },
+];
 
 export const Settings = () => {
-  const { theme, setTheme } = useTheme();
+  const { role } = useAuth();
+  const currentRole = role || 'Fleet Manager';
 
-  const rbacMatrix = [
-  { module: 'Fleet Assets', manager: true, dispatcher: false, safety: true, finance: false },
-  { module: 'Driver registry', manager: true, dispatcher: false, safety: true, finance: false },
-  { module: 'Trips & Dispatch', manager: true, dispatcher: true, safety: false, finance: false },
-  { module: 'Maintenance Scheduled', manager: true, dispatcher: false, safety: true, finance: false },
-  { module: 'Fuel & Expense logs', manager: true, dispatcher: false, safety: false, finance: true },
-  { module: 'Analytics & CSV logs', manager: true, dispatcher: true, safety: true, finance: true }];
+  // Filter menu items based on Role
+  const availableMenuItems = MENU_ITEMS.filter(item => item.roles.includes(currentRole));
 
+  const [activeTab, setActiveTab] = useState(availableMenuItems[0]?.id || 'profile');
+
+  const renderSection = () => {
+    switch (activeTab) {
+      case 'profile': return <ProfileSection />;
+      case 'organization': return <OrganizationSection />;
+      case 'notifications': return <NotificationsSection />;
+      case 'security': return <SecuritySection />;
+      case 'fleet-config': return <FleetConfigSection />;
+      case 'rbac': return <RolesPermissionsSection />;
+      case 'appearance': return <AppearanceSection />;
+      case 'data': return <DataReportsSection />;
+      case 'integrations': return <IntegrationsSection />;
+      case 'activity': return <ActivityLogsSection />;
+      case 'health': return <FleetHealthSection />;
+      case 'ai': return <AIFleetInsightsSection />;
+      case 'about': return <AboutSystemSection />;
+      case 'help': return <HelpSupportSection />;
+      default: return <ProfileSection />;
+    }
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
-            System Parameters
-            <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 uppercase tracking-widest">
-              View Only
-            </span>
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium mt-0.5">
-            Overview of organization configurations, regional settings, and role permissions matrix.
-          </p>
+    <div className="flex flex-col lg:flex-row gap-8 min-h-[calc(100vh-140px)] animate-in fade-in duration-300">
+
+      {/* LEFT: Settings Navigation (Sticky) */}
+      <div className="w-full lg:w-64 shrink-0">
+        <div className="sticky top-6 space-y-1">
+          <div className="mb-6 px-2">
+            <h1 className="text-2xl font-black text-slate-800 tracking-tight">Settings</h1>
+            <p className="text-xs text-slate-500 font-medium mt-1">Manage system preferences.</p>
+          </div>
+
+          <nav className="flex flex-col space-y-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
+            {availableMenuItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-bold transition-all ${isActive
+                      ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                      : 'text-slate-600 hover:bg-orange-50 hover:text-orange-600'
+                    }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon size={18} className={isActive ? 'text-white' : 'text-slate-400'} />
+                    <span>{item.label}</span>
+                  </div>
+                  {isActive && <ChevronRight size={16} className="text-orange-200" />}
+                </button>
+              )
+            })}
+          </nav>
         </div>
       </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            {/* Left Column */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* General Settings Info */}
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-5">
-                <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center gap-2">
-                  <FiSettings className="text-orange-500 w-4 h-4" />
-                  <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">Organization Profile</h3>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Central Depot Address</span>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 block mt-1">100 Logistics Pkwy, Chicago, IL</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Default Currency</span>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 block mt-1">USD ($)</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Distance Metric Unit</span>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 block mt-1">Kilometers (km)</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Support Contact Email</span>
-                    <span className="text-sm font-semibold text-slate-600 dark:text-slate-300 block mt-1">operations-support@transitops.com</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Appearance Settings */}
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-5">
-                <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center gap-2">
-                  {theme === 'dark' ? <FiMoon className="text-orange-500 w-4 h-4" /> : <FiSun className="text-orange-500 w-4 h-4" />}
-                  <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">Appearance</h3>
-                </div>
-                
-                <div className="space-y-3">
-                  <label className="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-                    <input 
-                      type="radio" 
-                      name="theme" 
-                      value="light" 
-                      checked={theme === 'light'} 
-                      onChange={() => setTheme('light')} 
-                      className="text-orange-500 focus:ring-orange-500" 
-                    />
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Light Mode</span>
-                      <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">Default high contrast view</span>
-                    </div>
-                  </label>
-                  
-                  <label className="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 border-slate-200 dark:border-slate-700">
-                    <input 
-                      type="radio" 
-                      name="theme" 
-                      value="dark" 
-                      checked={theme === 'dark'} 
-                      onChange={() => setTheme('dark')} 
-                      className="text-orange-500 focus:ring-orange-500" 
-                    />
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Dark Mode</span>
-                      <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">Low-glare optimized for nighttime</span>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: RBAC Matrix */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
-              <div>
-                <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">Role-Based Access Matrix (RBAC)</h3>
-                <p className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">RBAC configurations are read-only for security reasons.</p>
-              </div>
-
-              <div className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-                      <th className="px-4 py-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Module / Asset</th>
-                      <th className="px-4 py-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center">Fleet Manager</th>
-                      <th className="px-4 py-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center">Dispatcher</th>
-                      <th className="px-4 py-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center">Safety Officer</th>
-                      <th className="px-4 py-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center">Financial Analyst</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {rbacMatrix.map((row, idx) =>
-                    <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900/50">
-                        <td className="px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-200">{row.module}</td>
-                        <td className="px-4 py-3 text-center">
-                          {row.manager ? <FiCheck className="text-emerald-500 mx-auto w-4.5 h-4.5" /> : <FiX className="text-slate-300 mx-auto w-4 h-4" />}
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          {row.dispatcher ? <FiCheck className="text-emerald-500 mx-auto w-4.5 h-4.5" /> : <FiX className="text-slate-300 mx-auto w-4 h-4" />}
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          {row.safety ? <FiCheck className="text-emerald-500 mx-auto w-4.5 h-4.5" /> : <FiX className="text-slate-300 mx-auto w-4 h-4" />}
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          {row.finance ? <FiCheck className="text-emerald-500 mx-auto w-4.5 h-4.5" /> : <FiX className="text-slate-300 mx-auto w-4 h-4" />}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+      {/* RIGHT: Selected Settings Content */}
+      <div className="flex-1 min-w-0 bg-white border border-slate-200 rounded-3xl shadow-sm p-6 lg:p-10">
+        {renderSection()}
+      </div>
     </div>
   );
 };

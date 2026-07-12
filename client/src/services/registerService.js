@@ -3,7 +3,7 @@ const STORAGE_KEY = 'transitops_users';
 export const roles = ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'];
 
 const defaultUsers = [
-  { id: 'seed-fleet-manager', fullName: 'Alex Mercer', email: 'fleet@transitops.com', phoneNumber: '5551234001', role: 'Fleet Manager', password: '123456', createdAt: '2026-07-12T00:00:00.000Z' },
+  { id: 'seed-fleet-manager', fullName: 'Aarav Patel', email: 'fleet@transitops.com', phoneNumber: '5551234001', role: 'Fleet Manager', password: '123456', createdAt: '2026-07-12T00:00:00.000Z' },
   { id: 'seed-dispatcher', fullName: 'Jordan Lee', email: 'dispatcher@transitops.com', phoneNumber: '5551234002', role: 'Dispatcher', password: '123456', createdAt: '2026-07-12T00:00:00.000Z' },
   { id: 'seed-safety-officer', fullName: 'Morgan Ellis', email: 'safety@transitops.com', phoneNumber: '5551234003', role: 'Safety Officer', password: '123456', createdAt: '2026-07-12T00:00:00.000Z' },
   { id: 'seed-financial-analyst', fullName: 'Taylor Reed', email: 'finance@transitops.com', phoneNumber: '5551234004', role: 'Financial Analyst', password: '123456', createdAt: '2026-07-12T00:00:00.000Z' },

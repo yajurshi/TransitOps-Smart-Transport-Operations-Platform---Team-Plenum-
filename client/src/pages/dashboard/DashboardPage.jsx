@@ -5,12 +5,14 @@ import { FilterSection } from '../../components/FilterSection';
 import { KpiCard } from '../../components/KpiCard';
 import { RecentTripsTable } from '../../components/RecentTripsTable';
 import { VehicleStatusPanel } from '../../components/VehicleStatusPanel';
-import { FaTruck, FaRoute, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
-import { FiCheckCircle, FiTool, FiUsers, FiPercent, FiTrendingUp } from 'react-icons/fi';
+import { FaTruck, FaRoute, FaCheckCircle, FaExclamationTriangle, FaMapMarkedAlt } from 'react-icons/fa';
+import { FiCheckCircle, FiTool, FiUsers, FiPercent, FiTrendingUp, FiZap } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { useAuth } from '../../hooks/useAuth';
 import { hasAccess } from '../../utils/rbac';
+import { ProgressGauge } from '../../components/ProgressGauge';
+import { Timeline } from '../../components/Timeline';
 
 // Import all subpages
 import { VehicleList } from '../fleet/VehicleList';
@@ -23,15 +25,16 @@ import { TripDetails } from '../trips/TripDetails';
 import { MaintenanceList } from '../maintenance/MaintenanceList';
 import { MaintenanceDetails } from '../maintenance/MaintenanceDetails';
 import { FuelExpenses } from '../fuel/FuelExpenses';
+import { Reports } from '../reports/Reports';
 import { Analytics } from '../analytics/Analytics';
 import { Settings } from '../settings/Settings';
 import { Profile } from '../profile/Profile';
 
 const recentActivity = [
-  { id: 1, time: '10:45 AM', type: 'warning', text: 'Vehicle CA-8899 reported a check engine warning (In Shop).' },
-  { id: 2, time: '10:12 AM', type: 'success', text: 'Trip TR-1002 completed successfully by driver Sarah Jenkins.' },
-  { id: 3, time: '09:30 AM', type: 'info', text: 'New trip TR-1003 dispatched to driver Bruce Wayne.' },
-  { id: 4, time: '08:15 AM', type: 'info', text: 'Driver Dom Toretto submitted pre-trip safety checklist.' }
+  { id: 1, time: '10:45 AM', type: 'warning', text: 'Vehicle GJ-05-KL-3210 reported a check engine warning (In Shop).' },
+  { id: 2, time: '10:12 AM', type: 'success', text: 'Trip TR-1002 completed successfully by driver Priya Patel.' },
+  { id: 3, time: '09:30 AM', type: 'info', text: 'New trip TR-1003 dispatched to driver Karan Mehta.' },
+  { id: 4, time: '08:15 AM', type: 'info', text: 'Driver Vishal Shah submitted pre-trip safety checklist.' }
 ];
 
 export const DashboardPage = () => {
@@ -40,7 +43,7 @@ export const DashboardPage = () => {
 
   // Define active user based on context
   const activeUser = {
-    name: user?.fullName || 'Alex Mercer',
+    name: user?.fullName || 'Aarav Patel',
     role: initialRole || 'Fleet Manager'
   };
 
@@ -229,174 +232,131 @@ export const DashboardPage = () => {
           />
         </div>
 
-        {/* Tables, Progress bars, and Live Activity panels */}
+        {/* Dashboard V2 - Map & Insights */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left/Middle Column (span 2): Recent Trips Table */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <RecentTripsTable trips={mappedTrips} />
 
+          {/* Left/Middle Column: Interactive Map & KPIs */}
+          <div className="lg:col-span-2 flex flex-col gap-6">
+
+            {/* Live Fleet Map Mockup */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg relative h-[400px]">
+              {/* Map Grid Pattern background */}
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                <div className="bg-slate-800/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-700 shadow-xl flex items-center gap-3">
+                  <FaMapMarkedAlt className="text-orange-500" />
+                  <span className="text-white font-bold text-sm tracking-wide">Live Fleet Radar</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur">
+                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> 18 Active
+                  </span>
+                  <span className="flex items-center gap-1.5 bg-rose-500/20 border border-rose-500/50 text-rose-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur">
+                    <span className="w-1.5 h-1.5 bg-rose-500 rounded-full"></span> 3 Alerts
+                  </span>
+                </div>
+              </div>
+
+              {/* Mock Map Nodes */}
+              <motion.div
+                animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/3 left-1/4 w-4 h-4 bg-orange-500 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.8)] border-2 border-white cursor-pointer group"
+              >
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-white text-slate-800 text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
+                  GJ-01-AB-1234 (On Route)
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ x: [0, -15, 0], y: [0, 25, 0] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute top-2/3 left-1/2 w-4 h-4 bg-orange-500 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.8)] border-2 border-white cursor-pointer group"
+              >
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-white text-slate-800 text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
+                  GJ-18-CD-9081 (Arriving Soon)
+                </div>
+              </motion.div>
+
+              <div className="absolute bottom-4 left-4 right-4 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 p-4 flex justify-around">
+                <ProgressGauge value={85} size={80} strokeWidth={6} label="Fleet Util" color="text-orange-500" />
+                <ProgressGauge value={92} size={80} strokeWidth={6} label="On Time" color="text-emerald-500" />
+                <ProgressGauge value={14} size={80} strokeWidth={6} label="In Shop" color="text-rose-500" />
+              </div>
+            </div>
+
+            {/* AI Insights & Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Available Dispatch Operators */}
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-col">
-                <div className="pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-slate-800 dark:text-white text-xs uppercase tracking-widest flex items-center gap-1.5">
-                    <FiUsers className="text-orange-500 w-4 h-4" />
-                    Ready Operators
+              {/* AI Insights Card */}
+              <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-5 shadow-sm relative overflow-hidden">
+                <FiZap className="absolute -right-4 -top-4 w-24 h-24 text-indigo-500/10 rotate-12" />
+                <h3 className="font-bold text-indigo-900 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <FiZap className="text-indigo-600" /> AI Insights
+                </h3>
+                <div className="space-y-3 relative z-10">
+                  <div className="bg-white/60 backdrop-blur rounded-xl p-3 border border-white/50 text-xs font-semibold text-indigo-900 flex justify-between items-center">
+                    <span>Fuel expenses increased by 11% this week.</span>
+                    <button className="text-indigo-600 hover:underline font-bold text-[10px] uppercase tracking-wider">Review</button>
+                  </div>
+                  <div className="bg-white/60 backdrop-blur rounded-xl p-3 border border-white/50 text-xs font-semibold text-rose-900 flex justify-between items-center">
+                    <span>Truck GJ-05-KL-3210 requires immediate servicing.</span>
+                    <button className="text-rose-600 hover:underline font-bold text-[10px] uppercase tracking-wider">Schedule</button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Operators */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col">
+                <div className="pb-3 border-b border-slate-100 flex items-center justify-between mb-4">
+                  <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider flex items-center gap-1.5">
+                    <FiUsers className="text-orange-500 w-4 h-4" /> Ready Operators
                   </h3>
                   <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
                     Available
                   </span>
                 </div>
-                <div className="space-y-3.5 flex-1 overflow-y-auto max-h-[180px]">
+                <div className="space-y-3.5 flex-1 overflow-y-auto max-h-[160px] hide-scrollbar">
                   {drivers.filter((d) => d.status === 'Available').slice(0, 3).map((driver) => (
-                    <div key={driver.name} className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-2.5">
+                    <div key={driver.name} className="flex justify-between items-center bg-slate-50 border border-slate-200/50 rounded-xl p-3 hover:border-orange-200 transition-colors cursor-pointer">
                       <div>
-                        <span className="block text-xs font-bold text-slate-700 dark:text-slate-200">{driver.name}</span>
-                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-semibold mt-0.5">{driver.licenseCategory} • {driver.licenseNumber}</span>
+                        <span className="block text-xs font-bold text-slate-700">{driver.name}</span>
+                        <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">{driver.licenseCategory}</span>
                       </div>
-                      <div className="text-right">
-                        <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded ${
-                          driver.safetyScore >= 90 ? 'bg-emerald-50 text-emerald-700' :
-                          driver.safetyScore >= 80 ? 'bg-amber-50 text-amber-700' :
-                          'bg-rose-50 text-rose-700'
+                      <span className={`inline-block text-[10px] font-extrabold px-2 py-1 rounded-lg ${driver.safetyScore >= 90 ? 'bg-emerald-100 text-emerald-700' :
+                          driver.safetyScore >= 80 ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700'
                         }`}>
-                          Score: {driver.safetyScore}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Active Fleet Maintenance */}
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-col">
-                <div className="pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-slate-800 dark:text-white text-xs uppercase tracking-widest flex items-center gap-1.5">
-                    <FiTool className="text-orange-500 w-4 h-4" />
-                    Fleet shop log
-                  </h3>
-                  <span className="text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                    In Repairs
-                  </span>
-                </div>
-                <div className="space-y-3.5 flex-1 overflow-y-auto max-h-[180px]">
-                  {maintenance.filter((m) => m.status === 'In Progress' || m.status === 'Scheduled').slice(0, 3).map((m) => (
-                    <div key={m.id} className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-2.5">
-                      <div>
-                        <span className="block text-xs font-bold text-slate-700 dark:text-slate-200">{m.vehicleName}</span>
-                        <span className="block text-[9px] text-rose-600 font-bold mt-0.5">{m.issue}</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="block text-[9px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">ETA: {m.expectedCompletion}</span>
-                      </div>
+                        Score: {driver.safetyScore}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+
           </div>
 
-          {/* Right Column (span 1): Vehicle Status Panel & Live Activity */}
+          {/* Right Column: Timeline Activity */}
           <div className="flex flex-col gap-6">
-            {/* Vehicle Distribution Progress bars */}
-            <VehicleStatusPanel
-              statusCounts={{
-                available: metrics.availableVehicles,
-                onTrip: metrics.activeVehicles,
-                inShop: metrics.inShopVehicles,
-                retired: metrics.retiredVehicles
-              }}
-            />
-
-            {/* Fuel Trend Visualization Graph (DHL Style Dashboard) */}
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-col">
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
-                <div>
-                  <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">
-                    Fuel Cost Trend
-                  </h3>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">Weekly cost distribution overview.</p>
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  <FiTrendingUp className="w-3.5 h-3.5" />
-                  <span>+12.4%</span>
-                </div>
-              </div>
-
-              {/* SVG Animated Sparkline Chart */}
-              <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-2 h-24 mb-4">
-                <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
-                  <defs>
-                    <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f97316" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#f97316" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d={`M 0,${chartHeight} L ${chartPoints} L ${chartWidth},${chartHeight} Z`}
-                    fill="url(#gradient)"
-                  />
-                  <motion.path
-                    d={`M ${chartPoints}`}
-                    fill="none"
-                    stroke="#f97316"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.2, ease: 'easeInOut' }}
-                  />
-                </svg>
-              </div>
-
-              <div className="flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider font-mono">
-                <span>Mon</span>
-                <span>Wed</span>
-                <span>Fri</span>
-                <span>Sun</span>
-              </div>
-            </div>
-
-            {/* Live Alerts Activity Log */}
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm flex flex-col flex-1">
-              <div className="pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between mb-4">
-                <h3 className="font-bold text-slate-800 dark:text-white text-sm uppercase tracking-wider">
-                  Recent Alerts
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col flex-1 h-[670px]">
+              <div className="pb-4 border-b border-slate-100 flex items-center justify-between mb-6">
+                <h3 className="font-black text-slate-800 text-lg tracking-tight">
+                  Activity Stream
                 </h3>
-                <span className="text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Real-time
+                <span className="text-[10px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-1 rounded-full uppercase tracking-wider">
+                  Live
                 </span>
               </div>
 
-              {/* Timeline activity list */}
-              <div className="space-y-4 flex-1 flex flex-col justify-start">
-                {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex gap-3 items-start group">
-                    <div className="mt-0.5">
-                      {activity.type === 'warning' ? (
-                        <div className="w-5 h-5 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500">
-                          <FaExclamationTriangle className="w-2.5 h-2.5" />
-                        </div>
-                      ) : activity.type === 'success' ? (
-                        <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-500">
-                          <FaCheckCircle className="w-2.5 h-2.5" />
-                        </div>
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-500">
-                          <FaTruck className="w-2.5 h-2.5" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 leading-normal group-hover:text-slate-900 transition-colors">
-                        {activity.text}
-                      </p>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold font-mono tracking-wider block mt-0.5 uppercase">
-                        {activity.time}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+              {/* Integrated Reusable Timeline Component */}
+              <div className="flex-1 overflow-y-auto hide-scrollbar -mr-4 pr-4">
+                <Timeline events={[
+                  { title: 'Warning: Engine Light', description: 'Vehicle GJ-05-KL-3210 reported a check engine warning.', status: 'active', time: '10:45 AM' },
+                  { title: 'Trip TR-1002 Completed', description: 'Driver Priya Patel finished route to Surat.', status: 'completed', time: '10:12 AM' },
+                  { title: 'Dispatched TR-1003', description: 'Tata Ace Gold dispatched to Vadodara.', status: 'completed', time: '09:30 AM' },
+                  { title: 'Driver Clock-in', description: 'Vishal Shah submitted pre-trip safety checklist.', status: 'completed', time: '08:15 AM' },
+                  { title: 'Refueling Complete', description: 'Added 120L to GJ-01-AB-1234 at Reliance Pump.', status: 'completed', time: '07:45 AM' }
+                ]} />
               </div>
             </div>
           </div>
@@ -418,6 +378,7 @@ export const DashboardPage = () => {
       'Maintenance': 'Maintenance',
       'MaintenanceDetails': 'MaintenanceDetails',
       'FuelExpenses': 'Fuel',
+      'Reports': 'Reports',
       'Analytics': 'Analytics',
       'Settings': 'Settings',
       'Profile': 'Profile'
@@ -433,7 +394,7 @@ export const DashboardPage = () => {
           </div>
           <h2 className="text-2xl font-black text-slate-800 dark:text-white">Access Restricted</h2>
           <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 max-w-md">
-            Your current role ({activeUser.role}) does not have permission to view the {currentView} module. 
+            Your current role ({activeUser.role}) does not have permission to view the {currentView} module.
             If you believe this is an error, please contact the system administrator.
           </p>
           <button onClick={() => setCurrentView('Dashboard')} className="mt-4 px-6 py-2.5 bg-orange-500 text-white font-bold rounded-lg uppercase tracking-wider text-xs transition-all hover:bg-orange-600 active:scale-95">
@@ -464,6 +425,8 @@ export const DashboardPage = () => {
         return <MaintenanceDetails />;
       case 'FuelExpenses':
         return <FuelExpenses searchQuery={searchQuery} />;
+      case 'Reports':
+        return <Reports searchQuery={searchQuery} />;
       case 'Analytics':
         return <Analytics />;
       case 'Settings':

@@ -64,10 +64,10 @@ export const FilterSection = ({
           className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
         >
           <option value="All">All Regions</option>
-          <option value="North">North Region</option>
-          <option value="South">South Region</option>
-          <option value="East">East Region</option>
-          <option value="West">West Region</option>
+          <option value="North">Ahmedabad Zone</option>
+          <option value="South">Surat Zone</option>
+          <option value="East">Vadodara Zone</option>
+          <option value="West">Rajkot Zone</option>
         </select>
       </div>
 

@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useAuth } from '../../hooks/useAuth';
-import { FiFilter, FiRefreshCw, FiEye, FiPlus, FiX } from 'react-icons/fi';
+import { FiFilter, FiRefreshCw, FiEye, FiPlus, FiX, FiCalendar, FiClock, FiSettings } from 'react-icons/fi';
+import { FaWrench } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 export const MaintenanceList = ({ searchQuery = '' }) => {
@@ -42,9 +43,9 @@ export const MaintenanceList = ({ searchQuery = '' }) => {
   const filtered = useMemo(() => {
     return maintenance.filter((m) => {
       const matchesSearch = searchQuery === '' ||
-      m.vehicleReg.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.vehicleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.issue.toLowerCase().includes(searchQuery.toLowerCase());
+        m.vehicleReg.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        m.vehicleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        m.issue.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = statusFilter === 'All' || m.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -122,11 +123,11 @@ export const MaintenanceList = ({ searchQuery = '' }) => {
             </div>
             <form onSubmit={handleCreateSubmit} className="p-6 space-y-4">
               {createError && <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg border border-red-200">{createError}</div>}
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Select Available Vehicle</label>
-                  <select required value={newMaintenance.vehicleReg} onChange={e => setNewMaintenance({...newMaintenance, vehicleReg: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500">
+                  <select required value={newMaintenance.vehicleReg} onChange={e => setNewMaintenance({ ...newMaintenance, vehicleReg: e.target.value })} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500">
                     <option value="" disabled>-- Select a Vehicle --</option>
                     {availableVehicles.map(v => (
                       <option key={v.reg} value={v.reg}>{v.reg} - {v.name}</option>
@@ -135,15 +136,15 @@ export const MaintenanceList = ({ searchQuery = '' }) => {
                 </div>
                 <div className="col-span-2">
                   <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Issue Summary</label>
-                  <input type="text" required value={newMaintenance.issue} onChange={e => setNewMaintenance({...newMaintenance, issue: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" placeholder="e.g. Brake Pad Replacement" />
+                  <input type="text" required value={newMaintenance.issue} onChange={e => setNewMaintenance({ ...newMaintenance, issue: e.target.value })} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" placeholder="e.g. Brake Pad Replacement" />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Description / Symptoms</label>
-                  <textarea required value={newMaintenance.description} onChange={e => setNewMaintenance({...newMaintenance, description: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" rows="2" />
+                  <textarea required value={newMaintenance.description} onChange={e => setNewMaintenance({ ...newMaintenance, description: e.target.value })} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" rows="2" />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Expected Completion Date</label>
-                  <input type="date" required value={newMaintenance.expectedCompletion} onChange={e => setNewMaintenance({...newMaintenance, expectedCompletion: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" />
+                  <input type="date" required value={newMaintenance.expectedCompletion} onChange={e => setNewMaintenance({ ...newMaintenance, expectedCompletion: e.target.value })} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" />
                 </div>
               </div>
               <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
@@ -170,7 +171,7 @@ export const MaintenanceList = ({ searchQuery = '' }) => {
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-700 dark:text-slate-200 font-medium focus:outline-none">
-            
+
             <option value="All">All Statuses</option>
             <option value="Scheduled">Scheduled</option>
             <option value="In Progress">In Progress</option>
@@ -179,66 +180,64 @@ export const MaintenanceList = ({ searchQuery = '' }) => {
         </div>
 
         <button
-          onClick={() => {setStatusFilter('All');}}
+          onClick={() => { setStatusFilter('All'); }}
           className="h-[38px] flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-600 dark:bg-slate-800 dark:hover:bg-slate-600 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg px-4 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700">
-          
+
           <FiRefreshCw />
           <span>RESET</span>
         </button>
       </div>
 
-      {/* Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
-        
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Maintenance ID</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Vehicle Name</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Registration</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Issue</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Start Date</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Expected Completion</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">Status</th>
-              <th className="px-6 py-4 text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {filtered.length > 0 ?
-            filtered.map((m) =>
-            <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-slate-800 dark:text-white text-sm">{m.id}</td>
-                  <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200 text-sm">{m.vehicleName}</td>
-                  <td className="px-6 py-4 font-mono text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">{m.vehicleReg}</td>
-                  <td className="px-6 py-4 text-xs font-semibold text-slate-600 dark:text-slate-300">{m.issue}</td>
-                  <td className="px-6 py-4 text-xs font-mono text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">{m.startDate}</td>
-                  <td className="px-6 py-4 text-xs font-mono text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">{m.expectedCompletion}</td>
-                  <td className="px-6 py-4">{getStatusBadge(m.status)}</td>
-                  <td className="px-6 py-4 text-right">
-                    <button
-                  onClick={() => handleViewDetails(m.id)}
-                  className="inline-flex items-center gap-1 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 dark:bg-slate-900 dark:hover:bg-slate-700 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white dark:text-white dark:hover:text-white dark:text-white font-bold text-xs px-2.5 py-1.5 rounded-lg transition-all">
-                  
-                      <FiEye />
-                      <span>View Details</span>
-                    </button>
-                  </td>
-                </tr>
-            ) :
+      {/* Upcoming Service Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filtered.length > 0 ? (
+          filtered.map((m, idx) => (
+            <motion.div
+              key={m.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: idx * 0.05 }}
+              className="bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-lg hover:border-orange-300 transition-all cursor-pointer overflow-hidden flex flex-col group p-5 relative"
+              onClick={() => handleViewDetails(m.id)}
+            >
+              <div className="absolute top-4 right-4">
+                {getStatusBadge(m.status)}
+              </div>
 
-            <tr>
-                <td colSpan={8} className="px-6 py-12 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium text-sm">
-                  No maintenance tasks scheduled.
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </motion.div>
+              <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-4 border border-orange-100 group-hover:bg-orange-500 group-hover:text-white transition-colors text-orange-500">
+                <FaWrench className="w-6 h-6" />
+              </div>
+
+              <h3 className="text-base font-black text-slate-800 leading-tight truncate pr-16">{m.issue}</h3>
+              <p className="text-xs font-semibold text-slate-500 mt-1 truncate">{m.vehicleName} ({m.vehicleReg})</p>
+
+              <div className="mt-5 pt-4 border-t border-slate-100 grid grid-cols-2 gap-3 text-left">
+                <div>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block flex items-center gap-1"><FiCalendar /> Started</span>
+                  <span className="text-xs font-bold text-slate-700 block mt-0.5">{m.startDate}</span>
+                </div>
+                <div>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block flex items-center gap-1"><FiClock /> Expected</span>
+                  <span className="text-xs font-bold text-slate-700 block mt-0.5">{m.expectedCompletion}</span>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">{m.id}</span>
+                <button className="text-[10px] font-bold text-orange-500 hover:text-orange-600 uppercase tracking-wider flex items-center gap-1">
+                  Details <FiEye className="w-3 h-3" />
+                </button>
+              </div>
+            </motion.div>
+          ))
+        ) : (
+          <div className="col-span-full py-20 text-center flex flex-col items-center justify-center">
+            <FiSettings className="w-12 h-12 text-slate-200 mb-4 animate-spin-slow" />
+            <h3 className="text-lg font-bold text-slate-800">No Maintenance Tasks</h3>
+            <p className="text-sm text-slate-500 max-w-sm mt-2">No service records match the current filter criteria.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

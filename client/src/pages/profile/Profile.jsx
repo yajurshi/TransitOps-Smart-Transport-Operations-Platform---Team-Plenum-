@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { FiLock, FiLogOut } from 'react-icons/fi';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Profile = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [msg, setMsg] = useState(null);
+  
+  const { user, role } = useAuth();
+  
+  const userName = user?.fullName || 'Aarav Patel';
+  const userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+  const userEmail = user?.email || `${userName.split(' ')[0].toLowerCase()}.${userName.split(' ')[1].toLowerCase()}@transitops.in`;
+  const userRole = role || 'Dispatcher (Operations)';
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
@@ -46,20 +54,20 @@ export const Profile = () => {
             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-5 flex flex-col items-center text-center">
               {/* Profile Avatar */}
               <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 flex items-center justify-center text-white font-extrabold text-3xl border-4 border-white shadow-lg ring-4 ring-orange-100">
-                AM
+                {userInitials}
               </div>
 
               <div>
-                <h3 className="font-bold text-slate-800 dark:text-white text-lg leading-tight">Alex Mercer</h3>
+                <h3 className="font-bold text-slate-800 dark:text-white text-lg leading-tight">{userName}</h3>
                 <span className="inline-block mt-1 text-[10px] font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-orange-200/50">
-                  Dispatcher (Operations)
+                  {userRole}
                 </span>
               </div>
 
               <div className="w-full pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3 text-left">
                 <div>
                   <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Email Address</span>
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block mt-0.5">alex.mercer@transitops.com</span>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block mt-0.5">{userEmail}</span>
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Mobile Phone</span>

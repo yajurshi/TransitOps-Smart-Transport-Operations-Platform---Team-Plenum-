@@ -14,7 +14,7 @@ const roleRedirects = {
 };
 
 const demoCredentials = {
-  'Fleet Manager': { email: 'fleet@transitops.com', password: '123456', name: 'Alex Mercer' },
+  'Fleet Manager': { email: 'fleet@transitops.com', password: '123456', name: 'Aarav Patel' },
   Dispatcher: { email: 'dispatcher@transitops.com', password: '123456', name: 'Jordan Lee' },
   'Safety Officer': { email: 'safety@transitops.com', password: '123456', name: 'Morgan Ellis' },
   'Financial Analyst': { email: 'finance@transitops.com', password: '123456', name: 'Taylor Reed' },
@@ -32,7 +32,7 @@ export const login = async ({ email, password, rememberMe, role }) => {
     token: mockToken,
     user: {
       id: MOCK_USER_ID,
-      fullName: 'Development User',
+      fullName: 'Hency Patel',
       email: normalizedEmail,
       role,
     },

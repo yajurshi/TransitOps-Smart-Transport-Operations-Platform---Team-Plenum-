@@ -114,7 +114,7 @@ export const CreateTrip = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Chicago Depot"
+                  placeholder="e.g. Gandhinagar Depot"
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />
@@ -128,7 +128,7 @@ export const CreateTrip = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Detroit Fulfillment"
+                  placeholder="e.g. Bhavnagar Fulfillment"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500" />

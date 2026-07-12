@@ -101,12 +101,12 @@ export const VehicleDetails = () => {
                   <input type="text" required value={editData.name} onChange={e => setEditData({...editData, name: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Region</label>
+                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">Region</label>
                   <select value={editData.region} onChange={e => setEditData({...editData, region: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-orange-500">
-                    <option value="North">North</option>
-                    <option value="South">South</option>
-                    <option value="East">East</option>
-                    <option value="West">West</option>
+                    <option value="North">Ahmedabad Zone</option>
+                    <option value="South">Surat Zone</option>
+                    <option value="East">Vadodara Zone</option>
+                    <option value="West">Rajkot Zone</option>
                   </select>
                 </div>
                 <div>
@@ -217,8 +217,8 @@ export const VehicleDetails = () => {
                   <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block mt-1">4.8 km/L</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Total Fuel Cost</span>
-                  <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block mt-1">$4,850.00</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Total Fuel Cost</span>
+                  <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block mt-1">₹4,850.00</span>
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Last Fuel Up</span>

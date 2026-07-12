@@ -18,14 +18,11 @@ import {
 import { SafetyOfficerPageShell } from './SafetyOfficerPageShell';
 
 const settingsMenu = [
-  { id: 'profile', label: 'Profile', icon: UserRound },
   { id: 'general', label: 'General', icon: Building2 },
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'security', label: 'Security', icon: ShieldCheck },
   { id: 'fleet', label: 'Fleet Configuration', icon: Truck },
-  { id: 'rbac', label: 'Roles & Permissions', icon: KeyRound },
   { id: 'appearance', label: 'Appearance', icon: Brush },
-  { id: 'about', label: 'About System', icon: Info },
 ];
 
 const rbacRows = [
@@ -36,14 +33,11 @@ const rbacRows = [
 ];
 
 const menuTitleById = {
-  profile: 'Profile',
   general: 'General',
   notifications: 'Notifications',
   security: 'Security',
   fleet: 'Fleet Configuration',
-  rbac: 'Roles & Permissions',
   appearance: 'Appearance',
-  about: 'About System',
 };
 
 const Card = ({ title, subtitle, children, action }) => (
@@ -120,9 +114,9 @@ const CheckCell = ({ value }) => (
 );
 
 export const SettingsPage = () => {
-  const [activeSection, setActiveSection] = useState('profile');
+  const [activeSection, setActiveSection] = useState('general');
   const [profile, setProfile] = useState({
-    fullName: 'Development User',
+    fullName: 'Hency Patel',
     email: 'developer@transitops.com',
     phone: '9876543210',
     role: 'Safety Officer',
@@ -240,14 +234,14 @@ export const SettingsPage = () => {
             <Label>Currency</Label>
             <SelectInput value={general.currency} onChange={(event) => setGeneral({ ...general, currency: event.target.value })}>
               <option>INR</option>
-              <option>USD</option>
+              <option>INR</option>
             </SelectInput>
           </div>
           <div>
             <Label>Distance Unit</Label>
             <SelectInput value={general.distanceUnit} onChange={(event) => setGeneral({ ...general, distanceUnit: event.target.value })}>
               <option>Kilometers</option>
-              <option>Miles</option>
+              <option>Km</option>
             </SelectInput>
           </div>
         </div>
@@ -326,7 +320,7 @@ export const SettingsPage = () => {
             <Label>Default Currency</Label>
             <SelectInput value={fleetConfig.defaultCurrency} onChange={(event) => setFleetConfig({ ...fleetConfig, defaultCurrency: event.target.value })}>
               <option>INR</option>
-              <option>USD</option>
+              <option>INR</option>
             </SelectInput>
           </div>
           <div>
