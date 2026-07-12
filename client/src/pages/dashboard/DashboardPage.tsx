@@ -6,8 +6,9 @@ import { KpiCard } from '../../components/KpiCard';
 import { RecentTripsTable } from '../../components/RecentTripsTable';
 import { VehicleStatusPanel } from '../../components/VehicleStatusPanel';
 
-import { FaTruck, FaRoute } from 'react-icons/fa';
-import { FiCheckCircle, FiTool, FiUsers, FiPercent } from 'react-icons/fi';
+import { FaTruck, FaRoute, FaWrench, FaGasPump, FaPlus, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { FiCheckCircle, FiTool, FiUsers, FiPercent, FiTrendingUp } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
 // Define Types
 interface TripItem {
@@ -57,24 +58,22 @@ const initialVehicles: VehicleItem[] = [
   { reg: 'AZ-4455', name: 'Heavy Duty Rig', type: 'Heavy Duty', status: 'Available', region: 'West' }
 ];
 
+const recentActivity = [
+  { id: 1, time: '10:45 AM', type: 'warning', text: 'Vehicle CA-8899 reported a check engine warning (In Shop).' },
+  { id: 2, time: '10:12 AM', type: 'success', text: 'Trip TR-1002 completed successfully by driver Sarah Jenkins.' },
+  { id: 3, time: '09:30 AM', type: 'info', text: 'New trip TR-1003 dispatched to driver Bruce Wayne.' },
+  { id: 4, time: '08:15 AM', type: 'info', text: 'Driver Dom Toretto submitted pre-trip safety checklist.' }
+];
+
 export const DashboardPage: React.FC = () => {
-  // User/Role States
-  const [activeUser, setActiveUser] = useState({ name: 'Alex Mercer', role: 'Fleet Manager' });
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
+  // Read-only User/Role (Remove role switching)
+  const activeUser = { name: 'Alex Mercer', role: 'Fleet Manager' };
 
   // Search & Filter States
   const [searchQuery, setSearchQuery] = useState('');
   const [vehicleType, setVehicleType] = useState('All');
   const [status, setStatus] = useState('All');
   const [region, setRegion] = useState('All');
-
-  // List of roles for selection
-  const roles = ['Fleet Manager', 'Dispatcher', 'Safety Officer', 'Financial Analyst'];
-
-  const handleRoleChange = (role: string) => {
-    setActiveUser({ name: 'Alex Mercer', role });
-    setIsRoleDropdownOpen(false);
-  };
 
   const handleClearFilters = () => {
     setVehicleType('All');
@@ -140,57 +139,57 @@ export const DashboardPage: React.FC = () => {
     };
   }, [filteredVehicles, filteredTrips]);
 
+  // Sparkline/Chart path animation variables for fuel cost distribution trend
+  const sparklineData = [35, 42, 38, 48, 55, 62, 58];
+  const chartWidth = 320;
+  const chartHeight = 80;
+  const chartPoints = useMemo(() => {
+    return sparklineData.map((val, idx) => {
+      const x = (idx / (sparklineData.length - 1)) * chartWidth;
+      const y = chartHeight - (val / Math.max(...sparklineData)) * (chartHeight - 10);
+      return `${x},${y}`;
+    }).join(' ');
+  }, []);
+
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      {/* Sidebar Component */}
+    <div className="min-h-screen bg-slate-50 flex overflow-hidden">
+      {/* Sidebar Component (White + Orange Theme) */}
       <Sidebar activeTab="Dashboard" />
 
       {/* Main Content Area */}
-      <div className="flex-1 pl-64 flex flex-col min-h-screen">
+      <div className="flex-1 pl-64 flex flex-col min-h-screen overflow-y-auto">
         {/* Top Navbar */}
-        <div className="relative">
-          <Navbar
-            userName={activeUser.name}
-            role={activeUser.role}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
-          {/* Quick role-switch trigger dropdown absolute positioned for testing */}
-          <div className="absolute right-8 top-13 z-30">
-            <button 
-              onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-              className="text-[10px] text-slate-400 hover:text-slate-600 font-semibold underline bg-transparent border-0 cursor-pointer"
-            >
-              Switch Role
-            </button>
-            {isRoleDropdownOpen && (
-              <div className="absolute right-0 mt-1 w-48 bg-white border border-slate-200 rounded-lg shadow-lg py-1 z-40">
-                {roles.map((r) => (
-                  <button
-                    key={r}
-                    onClick={() => handleRoleChange(r)}
-                    className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors ${
-                      activeUser.role === r ? 'text-blue-600 bg-blue-50/50' : 'text-slate-600'
-                    }`}
-                  >
-                    {r}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        <Navbar
+          userName={activeUser.name}
+          role={activeUser.role}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
 
         {/* Content Body */}
         <main className="flex-1 p-8 pt-24 space-y-6 max-w-7xl w-full mx-auto">
           {/* Page Title Header */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-200 pb-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Dashboard Overview</h1>
-              <p className="text-xs text-slate-500 font-medium">Real-time status monitoring, metrics tracking, and resource allocation.</p>
+              <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+                Logistics Control Center
+                <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+                  Live
+                </span>
+              </h1>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                Real-time operational dashboard for fleet coordination, driver dispatch, and cost tracking.
+              </p>
             </div>
-            <div className="text-xs font-bold text-slate-400 font-mono bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
-              SYSTEM TIME: 2026-07-12 11:04
+            {/* Quick action controls */}
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all shadow-md shadow-orange-500/20">
+                <FaPlus className="w-3 h-3" />
+                <span>Dispatch Trip</span>
+              </button>
+              <button className="flex items-center gap-1.5 bg-white hover:bg-slate-50 active:scale-95 text-slate-600 font-bold text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all border border-slate-200 shadow-sm">
+                <span>Export logs</span>
+              </button>
             </div>
           </div>
 
@@ -210,61 +209,194 @@ export const DashboardPage: React.FC = () => {
             <KpiCard
               title="Active Vehicles"
               value={metrics.activeVehicles}
-              trend="+2 today"
+              trend="+2 running"
               trendType="positive"
-              icon={<FaTruck className="w-5 h-5 text-blue-500" />}
+              icon={<FaTruck className="w-4 h-4 text-orange-500" />}
+              delayIndex={0}
             />
             <KpiCard
               title="Available Vehicles"
               value={metrics.availableVehicles}
               trend="Optimal"
               trendType="neutral"
-              icon={<FiCheckCircle className="w-5 h-5 text-green-500" />}
+              icon={<FiCheckCircle className="w-4 h-4 text-orange-500" />}
+              delayIndex={1}
             />
             <KpiCard
-              title="Vehicles in Maintenance"
+              title="Vehicles In Shop"
               value={metrics.inShopVehicles}
-              trend="-1 this week"
+              trend="-1 active repair"
               trendType="positive"
-              icon={<FiTool className="w-5 h-5 text-rose-500" />}
+              icon={<FiTool className="w-4 h-4 text-orange-500" />}
+              delayIndex={2}
             />
             <KpiCard
               title="Active Trips"
               value={metrics.activeTripsCount}
-              trend="On Track"
-              trendType="neutral"
-              icon={<FaRoute className="w-5 h-5 text-amber-500" />}
+              trend="100% On-Track"
+              trendType="positive"
+              icon={<FaRoute className="w-4 h-4 text-orange-500" />}
+              delayIndex={3}
             />
             <KpiCard
               title="Drivers On Duty"
               value={metrics.driversOnDuty}
-              trend="100% capacity"
-              trendType="positive"
-              icon={<FiUsers className="w-5 h-5 text-indigo-500" />}
+              trend="No alerts"
+              trendType="neutral"
+              icon={<FiUsers className="w-4 h-4 text-orange-500" />}
+              delayIndex={4}
             />
             <KpiCard
               title="Fleet Utilization"
               value={`${metrics.utilization}%`}
               trend="Target 85%"
               trendType="positive"
-              icon={<FiPercent className="w-5 h-5 text-purple-500" />}
+              icon={<FiPercent className="w-4 h-4 text-orange-500" />}
+              delayIndex={5}
             />
           </div>
 
-          {/* Tables and Secondary Panels Layout Grid */}
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Recent Trips Table */}
-            <RecentTripsTable trips={filteredTrips} />
+          {/* Tables, Progress bars, and Live Activity panels */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Left/Middle Column (span 2): Recent Trips Table */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <RecentTripsTable trips={filteredTrips} />
 
-            {/* Vehicle Status horizontal progress panel */}
-            <VehicleStatusPanel
-              statusCounts={{
-                available: metrics.availableVehicles,
-                onTrip: metrics.activeVehicles,
-                inShop: metrics.inShopVehicles,
-                retired: metrics.retiredVehicles
-              }}
-            />
+              {/* Quick Actions Panel */}
+              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                <h4 className="font-bold text-slate-800 text-xs uppercase tracking-widest mb-3.5">
+                  Quick Actions
+                </h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    { label: 'Register Vehicle', icon: <FaTruck className="text-orange-500 w-4 h-4" /> },
+                    { label: 'Assign Driver', icon: <FiUsers className="text-orange-500 w-4 h-4" /> },
+                    { label: 'Log Fuel Expense', icon: <FaGasPump className="text-orange-500 w-4 h-4" /> },
+                    { label: 'Schedule Repair', icon: <FaWrench className="text-orange-500 w-4 h-4" /> },
+                  ].map((act, index) => (
+                    <button
+                      key={index}
+                      className="flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 hover:border-orange-500/40 hover:bg-orange-50/20 active:scale-95 transition-all text-center gap-2"
+                    >
+                      <div className="p-2 bg-slate-50 border border-slate-200 rounded-lg group-hover:bg-orange-50">
+                        {act.icon}
+                      </div>
+                      <span className="text-xs font-semibold text-slate-700">{act.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (span 1): Vehicle Status Panel & Live Activity */}
+            <div className="flex flex-col gap-6">
+              {/* Vehicle Distribution Progress bars */}
+              <VehicleStatusPanel
+                statusCounts={{
+                  available: metrics.availableVehicles,
+                  onTrip: metrics.activeVehicles,
+                  inShop: metrics.inShopVehicles,
+                  retired: metrics.retiredVehicles
+                }}
+              />
+
+              {/* Fuel Trend Visualization Graph (DHL Style Dashboard) */}
+              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">
+                      Fuel Cost Trend
+                    </h3>
+                    <p className="text-[11px] text-slate-400 font-medium">Weekly cost distribution overview.</p>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    <FiTrendingUp className="w-3.5 h-3.5" />
+                    <span>+12.4%</span>
+                  </div>
+                </div>
+
+                {/* SVG Animated Sparkline Chart */}
+                <div className="flex items-center justify-center bg-slate-50 border border-slate-200/50 rounded-lg p-2 h-24 mb-4">
+                  <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
+                    {/* Shadow underneath chart path */}
+                    <defs>
+                      <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#f97316" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#f97316" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d={`M 0,${chartHeight} L ${chartPoints} L ${chartWidth},${chartHeight} Z`}
+                      fill="url(#gradient)"
+                    />
+                    {/* Animated Line */}
+                    <motion.path
+                      d={`M ${chartPoints}`}
+                      fill="none"
+                      stroke="#f97316"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 1.2, ease: 'easeInOut' }}
+                    />
+                  </svg>
+                </div>
+
+                <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-wider font-mono">
+                  <span>Mon</span>
+                  <span>Wed</span>
+                  <span>Fri</span>
+                  <span>Sun</span>
+                </div>
+              </div>
+
+              {/* Live Alerts Activity Log */}
+              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col flex-1">
+                <div className="pb-3 border-b border-slate-100 flex items-center justify-between mb-4">
+                  <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">
+                    Recent Alerts
+                  </h3>
+                  <span className="text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Real-time
+                  </span>
+                </div>
+
+                {/* Timeline activity list */}
+                <div className="space-y-4 flex-1 flex flex-col justify-start">
+                  {recentActivity.map((activity) => (
+                    <div key={activity.id} className="flex gap-3 items-start group">
+                      <div className="mt-0.5">
+                        {activity.type === 'warning' ? (
+                          <div className="w-5 h-5 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500">
+                            <FaExclamationTriangle className="w-2.5 h-2.5" />
+                          </div>
+                        ) : activity.type === 'success' ? (
+                          <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-500">
+                            <FaCheckCircle className="w-2.5 h-2.5" />
+                          </div>
+                        ) : (
+                          <div className="w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-500">
+                            <FaTruck className="w-2.5 h-2.5" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold text-slate-700 leading-normal group-hover:text-slate-900 transition-colors">
+                          {activity.text}
+                        </p>
+                        <span className="text-[10px] text-slate-400 font-bold font-mono tracking-wider block mt-0.5 uppercase">
+                          {activity.time}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </main>
       </div>

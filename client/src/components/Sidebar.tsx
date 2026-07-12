@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiGrid, FiUsers, FiBarChart2, FiSettings, FiTool } from 'react-icons/fi';
 import { FaTruck, FaRoute, FaGasPump } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 interface SidebarProps {
   activeTab?: string;
@@ -19,53 +20,63 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Dashboard' }) => 
   ];
 
   return (
-    <div className="w-64 bg-slate-900 text-slate-300 h-screen fixed left-0 top-0 flex flex-col border-r border-slate-800 z-30">
-      {/* Logo Header */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-800">
+    <div className="w-64 bg-white text-slate-700 h-screen fixed left-0 top-0 flex flex-col border-r border-slate-200 z-30 shadow-sm">
+      {/* Premium Logo Header */}
+      <div className="h-16 flex items-center px-6 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-900/30">
+          <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-orange-500/20">
             T
           </div>
           <div>
-            <span className="font-bold text-white text-lg tracking-wide">TransitOps</span>
-            <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Operations Platform</p>
+            <span className="font-bold text-slate-800 text-lg tracking-wide">TransitOps</span>
+            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Operations Platform</p>
           </div>
         </div>
       </div>
 
       {/* Menu Header */}
       <div className="px-6 pt-6 pb-2">
-        <span className="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Menu</span>
+        <span className="text-[11px] text-slate-400 font-bold uppercase tracking-widest">Menu</span>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
+      {/* Navigation Links with Framer Motion active animations */}
+      <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const isActive = item.name === activeTab;
           return (
             <button
               key={item.name}
               disabled={item.name !== 'Dashboard'} // Hackathon scope: only Dashboard is interactive
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-150 ${
+              className={`w-full relative flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/10'
-                  : 'hover:bg-slate-800 hover:text-slate-100 text-slate-400 cursor-not-allowed'
+                  ? 'text-orange-600'
+                  : 'hover:bg-slate-50 hover:text-slate-900 text-slate-500 cursor-not-allowed'
               }`}
             >
-              {item.icon}
-              <span>{item.name}</span>
+              {/* Active Background Animation */}
               {isActive && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                <motion.div
+                  layoutId="activeNavIndicator"
+                  className="absolute inset-0 bg-orange-50 border-r-4 border-orange-500 rounded-lg -z-10"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
               )}
+              <span className={`transition-transform duration-200 ${isActive ? 'scale-110 text-orange-500' : 'group-hover:scale-110'}`}>
+                {item.icon}
+              </span>
+              <span>{item.name}</span>
             </button>
           );
         })}
       </nav>
 
       {/* Footer Info */}
-      <div className="p-4 border-t border-slate-800 text-[11px] text-slate-500 flex justify-between items-center">
-        <span>Version 1.0.0</span>
-        <span className="w-2.5 h-2.5 rounded-full bg-green-500 border border-slate-900" title="System Online" />
+      <div className="p-4 border-t border-slate-100 text-[11px] text-slate-400 flex justify-between items-center bg-slate-50/50">
+        <span className="font-medium">Version 2.0.0</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold text-emerald-600 uppercase tracking-wider text-[9px]">Online</span>
+        </div>
       </div>
     </div>
   );
